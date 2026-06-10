@@ -16,13 +16,34 @@ Traditional internship management in the VET sector often relies on paper logboo
 - **Bilingual Architecture:** Integrated `i18n` engine supporting seamless, real-time UI switching between Macedonian (MK) and English (EN).
 - **Role-Based Access Control (RBAC):** Custom-tailored portals with strict middleware protection for three distinct user types:
 
-  - 🧑‍🎓 **Students:** Browse open positions, apply, maintain daily task logbooks, and submit geolocation-verified attendance.
-    <br><br><br>
-  <img width="200" height="400" alt="studentRegisterGif" src="https://github.com/user-attachments/assets/dd97f5d7-0b13-485f-a941-b56c76f89aed" />
+  <br>
 
-    <br><br><br>
-  - 🏢 **Companies:** Post structured internship listings, review candidate applications, and manage active interns.
-  - 👨‍🏫 **Mentors/Professors:** Monitor student quotas, review daily logs, manage excused absences, and generate bulk PDF archives for completed internships.
+  ### 🧑‍🎓 Student Portal (Mobile First)
+  Browse open positions, apply, maintain daily task logbooks, and submit geolocation-verified attendance.
+
+  | 📱 Registration & Role Selection | 📍 Submitting Daily Geolocation Log |
+  | :---: | :---: |
+  | <img width="200" alt="studentRegisterGif" src="https://github.com/user-attachments/assets/64d38d12-2d36-4447-8bf8-0d3e95a91728" /> | <img width="200" alt="studentLocationGif" src="https://github.com/user-attachments/assets/c13aab79-e638-4f2f-bc66-ee44f4663f20" /> |
+
+
+  <br>
+
+  ### 🏢 Company Portal
+  Post structured internship listings, review candidate applications, and manage active interns.
+
+  | 📋 Reviewing Student Applications | ✍️ Posting a New Internship |
+  | :---: | :---: |
+  | <img width="400" alt="companyReviewGif" src="YOUR_COMPANY_GIF_1_HERE" /> | <img width="400" alt="companyPostGif" src="YOUR_COMPANY_GIF_2_HERE" /> |
+
+  <br>
+
+  ### 👨‍🏫 Professor & Mentor Dashboard
+  Monitor student quotas, review daily logs, manage excused absences, and generate bulk PDF archives for completed internships.
+
+  | 📊 Monitoring Student Progress | 🗄️ 1-Click Bulk PDF Archiving |
+  | :---: | :---: |
+  | <img width="400" alt="professorMonitorGif" src="YOUR_PROFESSOR_GIF_1_HERE" /> | <img width="400" alt="professorArchiveGif" src="YOUR_PROFESSOR_GIF_2_HERE" /> |
+
 - **Responsive Hub Design:** Mobile-first, flex-grid layouts ensuring complex data tables and interactive dashboards scale perfectly on all devices.
 - **Smart Notifications:** Real-time alert ping system for application status updates and urgent mentor feedback.
 
@@ -43,10 +64,7 @@ Traditional internship management in the VET sector often relies on paper logboo
 
 ### Installation
 
-### Installation
-
 1. **Clone the repository**
    ```bash
    git clone [https://github.com/ivansimonovikj/EduPractic.git](https://github.com/ivansimonovikj/EduPractic.git)
-   cd EduPractic
-   ```
+   cd EduPractic<img width="800" height="1733" alt="studentRegisterGif" src="https://github.com/user-attachments/assets/068dbbf1-de8f-4b3f-a6a4-3d6d56054b3b" />
