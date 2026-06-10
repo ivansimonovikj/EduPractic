@@ -17,8 +17,10 @@ Traditional internship management in the VET sector often relies on paper logboo
 - **Role-Based Access Control (RBAC):** Custom-tailored portals with strict middleware protection for three distinct user types:
 
   - 🧑‍🎓 **Students:** Browse open positions, apply, maintain daily task logbooks, and submit geolocation-verified attendance.
-    <br>
+    <br><br><br>
   <img width="200" height="400" alt="studentRegisterGif" src="https://github.com/user-attachments/assets/dd97f5d7-0b13-485f-a941-b56c76f89aed" />
+
+    <br><br><br>
   - 🏢 **Companies:** Post structured internship listings, review candidate applications, and manage active interns.
   - 👨‍🏫 **Mentors/Professors:** Monitor student quotas, review daily logs, manage excused absences, and generate bulk PDF archives for completed internships.
 - **Responsive Hub Design:** Mobile-first, flex-grid layouts ensuring complex data tables and interactive dashboards scale perfectly on all devices.
