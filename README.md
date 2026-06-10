@@ -23,7 +23,7 @@ Traditional internship management in the VET sector often relies on paper logboo
 
   | 📱 Registration & Role Selection | 📍 Submitting Daily Geolocation Log |
   | :---: | :---: |
-  | <img width="200" alt="studentRegisterGif" src="https://github.com/user-attachments/assets/64d38d12-2d36-4447-8bf8-0d3e95a91728" /> | <img width="200" alt="studentLocationGif" src="https://github.com/user-attachments/assets/c13aab79-e638-4f2f-bc66-ee44f4663f20" /> |
+  | <img width="200" alt="studentRegisterGif" src="https://github.com/user-attachments/assets/64d38d12-2d36-4447-8bf8-0d3e95a91728" /> | <img width="200" alt="studentLocationGif" src="https://github.com/user-attachments/assets/3b3e058a-cc5e-486e-930a-b90666fc27c4" /> |
 
 
   <br>
