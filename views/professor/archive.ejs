@@ -5,7 +5,7 @@
         <h1 style="margin: 0; color: #222; font-size: 1.8rem;"><%= __('professor-archive.title') %></h1>
         <p style="margin: 5px 0 0; color: #666;"><%= __('professor-archive.subtitle') %></p>
       </div>
-      <span class="badge-count"><%= applications.length %> <%= __('professor-archive.totalCount').replace('<%= count %>', '') %></span>
+        <span class="badge-count"><%= __('professor-archive.totalCount').replace('\x3C%= count %\x3E', applications.length) %></span>
     </div>
 
     <div class="notif-list">
