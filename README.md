@@ -15,9 +15,10 @@ Traditional internship management in the VET sector often relies on paper logboo
 
 - **Bilingual Architecture:** Integrated `i18n` engine supporting seamless, real-time UI switching between Macedonian (MK) and English (EN).
 - **Role-Based Access Control (RBAC):** Custom-tailored portals with strict middleware protection for three distinct user types:
-  <br>
-  <img width="200" height="400" alt="studentRegisterGif" src="https://github.com/user-attachments/assets/dd97f5d7-0b13-485f-a941-b56c76f89aed" />
+
   - 🧑‍🎓 **Students:** Browse open positions, apply, maintain daily task logbooks, and submit geolocation-verified attendance.
+    <br>
+  <img width="200" height="400" alt="studentRegisterGif" src="https://github.com/user-attachments/assets/dd97f5d7-0b13-485f-a941-b56c76f89aed" />
   - 🏢 **Companies:** Post structured internship listings, review candidate applications, and manage active interns.
   - 👨‍🏫 **Mentors/Professors:** Monitor student quotas, review daily logs, manage excused absences, and generate bulk PDF archives for completed internships.
 - **Responsive Hub Design:** Mobile-first, flex-grid layouts ensuring complex data tables and interactive dashboards scale perfectly on all devices.
