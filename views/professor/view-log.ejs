@@ -1,0 +1,38 @@
+<div class="container" style="margin-top: 2rem;">
+  <a href="/professor/dashboard" style="text-decoration: none; color: #6366f1;">
+    <%= __('professorViewLog.backToDashboard') %>
+  </a>
+  
+  <div style="margin-top: 1.5rem; background: white; padding: 2rem; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
+    <h2><%= __('professorViewLog.recordFor') %> <%= application.student.name %></h2>
+    <p style="color: #64748b;">
+      <%= __('professorViewLog.company') %> <strong><%= application.company.name %></strong>
+    </p>
+    <hr>
+
+    <% if (activities.length > 0) { %>
+      <table style="width: 100%; border-collapse: collapse; margin-top: 1rem;">
+        <thead>
+          <tr style="text-align: left; border-bottom: 2px solid #e2e8f0;">
+            <th style="padding: 10px;"><%= __('professorViewLog.date') %></th>
+            <th style="padding: 10px;"><%= __('professorViewLog.activity') %></th>
+            <th style="padding: 10px;"><%= __('professorViewLog.hours') %></th>
+          </tr>
+        </thead>
+        <tbody>
+          <% activities.forEach(act => { %>
+            <tr style="border-bottom: 1px solid #f1f5f9;">
+              <td style="padding: 10px;"><%= new Date(act.date).toLocaleDateString(lng === 'mk' ? 'mk-MK' : 'en-US') %></td>
+              <td style="padding: 10px;"><%= act.description %></td>
+              <td style="padding: 10px;"><%= act.hours %> ч.</td>
+            </tr>
+          <% }); %>
+        </tbody>
+      </table>
+    <% } else { %>
+      <p style="text-align: center; color: #94a3b8; padding: 2rem;">
+        <%= __('professorViewLog.noActivities') %>
+      </p>
+    <% } %>
+  </div>
+</div>

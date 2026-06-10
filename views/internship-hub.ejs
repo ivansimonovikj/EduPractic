@@ -1,0 +1,160 @@
+<div class="hub-container">
+    <% if (application && application.pendingPing) { %>
+        <div class="alert-ping-wrapper" style="margin-bottom: 2rem; animation: slideDown 0.5s ease-out;">
+            <div class="alert-ping" style="background: #fef2f2; border: 2px solid #dc2626; padding: 1.5rem; border-radius: 20px; display: flex; align-items: center; gap: 20px; box-shadow: 0 10px 15px -3px rgba(220, 38, 38, 0.1); position: relative; overflow: hidden;">
+                <div style="position: absolute; top: 0; left: 0; width: 6px; height: 100%; background: #dc2626;"></div>
+                <div class="ping-icon" style="background: #dc2626; color: white; width: 55px; height: 55px; border-radius: 15px; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; flex-shrink: 0; animation: shake 2s infinite;">
+                    <i class="fas fa-exclamation-circle"></i>
+                </div>
+                <div>
+                    <h4 style="margin: 0; color: #991b1b; font-weight: 800; text-transform: uppercase; letter-spacing: 0.5px; font-size: 1.1rem;">
+                      <%= __('internshipHub.urgentPingTitle') %>
+                    </h4>
+                    <p style="margin: 4px 0 0 0; color: #b91c1c; font-size: 0.95rem; line-height: 1.4;">
+                      <%= __('internshipHub.urgentPingMessage') %>
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <style>
+            @keyframes shake {
+                0%, 100% { transform: rotate(0deg); }
+                10%, 30%, 50% { transform: rotate(-10deg); }
+                20%, 40%, 60% { transform: rotate(10deg); }
+            }
+            @keyframes slideDown {
+                from { opacity: 0; transform: translateY(-20px); }
+                to { opacity: 1; transform: translateY(0); }
+            }
+        </style>
+    <% } %>
+
+    <header class="hub-header">
+        <div class="header-info">
+            <h1 class="hub-title"><%= __('internshipHub.recordCenter') %></h1>
+            <div class="hub-subtitle">
+                <span><i class="fas fa-university"></i> <%= user.school %></span>
+                <span class="separator">|</span>
+                <span><i class="fas fa-building"></i> <%= company.name %></span>
+            </div>
+        </div>
+        <div class="header-status">
+            <span class="status-badge <%= application.status === 'completed' ? 'status-completed' : 'status-active' %>" 
+                  style="background: <%= application.status === 'completed' ? '#10b981' : '#3b82f6' %>; color: white; padding: 8px 16px; border-radius: 50px; font-weight: 700; display: flex; align-items: center; gap: 8px;">
+                <span class="pulse-dot" style="width: 8px; height: 8px; background: white; border-radius: 50%; display: <%= application.status === 'completed' ? 'none' : 'block' %>;"></span> 
+                <%= application.status === 'completed' ? __('internshipHub.statusCompleted') : __('internshipHub.statusActive') %>
+            </span>
+        </div>
+    </header>
+
+    <div class="hub-grid">
+        <aside class="hub-sidebar">
+            <div class="entry-card">
+                <div class="card-accent"></div>
+                <div class="card-content">
+                    <h4 class="card-title"><%= __('internshipHub.dailyEntry') %></h4>
+                    <p class="card-desc"><%= __('internshipHub.enterTodayActivites') %></p>
+
+                    <form id="checkInForm" action="/internship-hub/add" method="POST" class="hub-form">
+                        <input type="hidden" name="applicationId" value="<%= application._id %>">
+                        <input type="hidden" name="companyId" value="<%= company._id %>">
+                        
+                        <input type="hidden" id="studentLat" name="lat">
+                        <input type="hidden" id="studentLng" name="lng">
+                        <input type="hidden" id="targetLat" value="<%= company.location?.lat %>">
+                        <input type="hidden" id="targetLng" value="<%= company.location?.lng %>">
+
+                        <div class="form-group">
+                            <label><%= __('internshipHub.date') %></label>
+                            <div class="input-wrapper readonly">
+                                <i class="far fa-calendar-alt"></i>
+                                <input type="text" value="<%= new Date().toLocaleDateString(lng === 'mk' ? 'mk-MK' : 'en-US') %>" readonly>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label><%= __('internshipHub.whatDidToday') %></label>
+                            <textarea name="description" id="activityDesc" rows="4" placeholder="<%= __('internshipHub.describeTasks') %>" required></textarea>
+                        </div>
+
+                        <input type="hidden" name="hours" value="8">
+
+                        <div id="locationBox" class="location-verification">
+                            <button type="button" onclick="verifyLocation()" id="locBtn" class="btn-verify">
+                                <i class="fas fa-map-marker-alt"></i> <%= __('internshipHub.confirmLocation') %>
+                            </button>
+                            <p id="locationStatus" class="loc-status"><%= __('internshipHub.locationNotChecked') %></p>
+                        </div>
+
+                        <button type="submit" id="submitBtn" class="btn-submit disabled" disabled>
+                            <%= __('internshipHub.logEntryBtn') %>
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </aside>
+
+        <main class="hub-main">
+            <div class="stats-row">
+                <div class="stat-box">
+                    <span class="stat-label"><%= __('internshipHub.totalDays') %></span>
+                    <h2 class="stat-value purple"><%= activitiesCount %></h2>
+                </div>
+                <div class="stat-box">
+                    <span class="stat-label"><%= __('internshipHub.remainingDays') %></span>
+                    <h2 class="stat-value orange">
+                        <%= Math.max(0, requiredDays - (activitiesCount + (application.excusedDays || 0))) %>
+                    </h2>
+                </div>
+                <% if (application.excusedDays > 0) { %>
+                <div class="stat-box">
+                    <span class="stat-label"><%= __('internshipHub.excusedFromProf') %></span>
+                    <h2 class="stat-value" style="color: #0ea5e9;"><%= application.excusedDays %></h2>
+                </div>
+                <% } %>
+            </div>
+
+            <div class="history-card">
+                <h5 class="history-title"><%= __('internshipHub.previousActivities') %></h5>
+                <div class="table-responsive">
+                    <table class="hub-table">
+                        <thead>
+                            <tr>
+                                <th><%= __('internshipHub.dateHeader') %></th>
+                                <th><%= __('internshipHub.activityHeader') %></th>
+                                <th><%= __('internshipHub.statusHeader') %></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <% 
+                                const currentActivities = activities.filter(act => act.application.toString() === application._id.toString());
+                            %>
+                            
+                            <% if (currentActivities.length > 0) { %>
+                                <% currentActivities.forEach(act => { %>
+                                    <tr>
+                                        <td class="date-cell"><%= new Date(act.date).toLocaleDateString(lng === 'mk' ? 'mk-MK' : 'en-US') %></td>
+                                        <td class="desc-cell"><%= act.description %></td>
+                                        <td>
+                                            <span class="tag-success"><%= __('internshipHub.logged') %></span>
+                                        </td>
+                                    </tr>
+                                <% }) %>
+                            <% } else { %>
+                                <tr>
+                                    <td colspan="3" class="empty-state" style="text-align: center; padding: 3rem; color: #94a3b8;">
+                                        <i class="fas fa-box-open" style="font-size: 2rem; margin-bottom: 1rem; display: block;"></i>
+                                        <p><%= __('internshipHub.noActivities') %></p>
+                                    </td>
+                                </tr>
+                            <% } %>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </main>
+    </div>
+</div>
+
+<script src="/js/geolocation.js"></script>

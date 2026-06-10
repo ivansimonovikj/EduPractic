@@ -1,0 +1,36 @@
+<div class="welcome-wrapper">
+  <header class="hero">
+    <div class="hero-container">
+      <h1 class="hero-title"><%= __('welcome.mainTitle') %></h1>
+      <p class="hero-subtitle"><%= __('welcome.subtitle') %></p>
+      <div class="hero-actions">
+        <a href="/api/auth/register" class="btn btn-primary-lg"
+          ><%= __('welcome.startNowBtn') %></a
+        >
+        <a href="#features" class="btn btn-outline"
+          ><%= __('welcome.learnMoreBtn') %></a
+        >
+      </div>
+    </div>
+  </header>
+
+  <section id="features" class="features-section">
+    <div class="features-grid">
+      <div class="feature-item">
+        <div class="feature-icon">🎓</div>
+        <h3><%= __('welcome.forStudentsTitle') %></h3>
+        <p><%= __('welcome.forStudentsDesc') %></p>
+      </div>
+      <div class="feature-item">
+        <div class="feature-icon">🏫</div>
+        <h3><%= __('welcome.forSchoolsTitle') %></h3>
+        <p><%= __('welcome.forSchoolsDesc') %></p>
+      </div>
+      <div class="feature-item">
+        <div class="feature-icon">💼</div>
+        <h3><%= __('welcome.forCompaniesTitle') %></h3>
+        <p><%= __('welcome.forCompaniesDesc') %></p>
+      </div>
+    </div>
+  </section>
+</div>

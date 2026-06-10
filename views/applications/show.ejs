@@ -1,0 +1,121 @@
+<div class="container" style="margin-top: 3rem; max-width: 800px; padding-bottom: 5rem;">
+  <a href="/applications/my-list" class="btn-link" style="text-decoration: none; display: inline-block; margin-bottom: 1.5rem; color: #6366f1; font-weight: 500;">
+    <%= __('appShow.backToList') %>
+  </a>
+
+  <div class="stat-card" style="padding: 2.5rem; border-top: 5px solid #6366f1; margin-top: 1rem; background: #fff; border-radius: 15px; box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1);">
+    
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem; flex-wrap: wrap; gap: 1rem;">
+      <h1 style="font-size: 1.8rem; margin: 0; color: #1e293b;">
+        <%= __('appShow.applicationFor') %> <%= application.listing ? application.listing.title : __('appShow.unknownPosition') %>
+      </h1>
+      
+      <% 
+        let rawStatus = application.status ? application.status.toLowerCase() : '';
+        let displayStatus = application.status;
+
+        if(rawStatus === 'прифатено' || rawStatus === 'accepted') { 
+          displayStatus = __('appShow.statusAccepted');
+        }
+        else if(rawStatus === 'одбиено' || rawStatus === 'rejected') { 
+          displayStatus = __('appShow.statusRejected');
+        }
+        else if(rawStatus === 'completed' || rawStatus === 'завршено') { 
+          displayStatus = __('appShow.statusCompleted');
+        } else {
+          displayStatus = __('appShow.statusPending');
+        }
+      %>
+      <span style="background: #e0e7ff; color: #4338ca; padding: 8px 18px; border-radius: 50px; font-weight: 600; font-size: 0.9rem; text-transform: capitalize; border: 1px solid #c7d2fe;">
+        <%= __('appShow.status') %> <%= displayStatus %>
+      </span>
+    </div>
+
+    <div class="row" style="display: flex; gap: 2rem; flex-wrap: wrap;">
+      <div style="flex: 1; min-width: 280px; background: #f8fafc; padding: 1.5rem; border-radius: 12px; border: 1px solid #e2e8f0;">
+        <h4 style="margin-bottom: 1.2rem; color: #64748b; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 0.5px; border-bottom: 1px solid #e2e8f0; padding-bottom: 0.5rem;">
+          <%= __('appShow.studentData') %>
+        </h4>
+        
+        <p style="margin-bottom: 1rem;"><strong><%= __('appShow.name') %></strong><br> <%= application.student ? application.student.name : __('appShow.notAvailable') %></p>
+        
+        <p style="margin-bottom: 1rem;"><strong><%= __('appShow.email') %></strong><br> 
+          <a href="mailto:<%= application.student ? application.student.email : '' %>" style="color: #6366f1; text-decoration: none;">
+            <%= application.student ? application.student.email : __('appShow.notAvailable') %>
+          </a>
+        </p>
+
+        <p style="margin-bottom: 1rem;"><strong><%= __('appShow.phone') %></strong><br>
+          <% if(application.student && application.student.phone) { %>
+            <a href="tel:<%= application.student.phone %>" style="color: #059669; text-decoration: none; font-weight: 600;">
+              📞 <%= application.student.phone %>
+            </a>
+          <% } else { %>
+            <span style="color: #94a3b8; font-size: 0.85rem; font-style: italic;"><%= __('appShow.noPhoneEntered') %></span>
+          <% } %>
+        </p>
+
+        <% if(application.student && application.student.linkedin) { %>
+          <p style="margin-bottom: 1rem;"><strong><%= __('appShow.professionalProfile') %></strong><br>
+            <a href="<%= application.student.linkedin %>" target="_blank" style="display: inline-block; margin-top: 5px; color: #0077b5; text-decoration: none; font-weight: 600; font-size: 0.9rem;">
+              <%= __('appShow.linkedinProfile') %>
+            </a>
+          </p>
+        <% } %>
+
+        <p style="margin-top: 1.5rem; border-top: 1px solid #e2e8f0; padding-top: 1rem; font-size: 0.85rem; color: #94a3b8;">
+          <strong><%= __('appShow.dateApplied') %></strong><br> 
+          <%= new Date(application.dateApplied).toLocaleDateString(lng === 'mk' ? 'mk-MK' : 'en-US') %>
+        </p>
+      </div>
+
+      <div style="flex: 2; min-width: 300px;">
+        <h4 style="margin-bottom: 1rem; color: #64748b; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 0.5px;"><%= __('appShow.motivationalMessage') %></h4>
+        <div style="background: #fff; border: 1px solid #e2e8f0; padding: 1.5rem; border-radius: 12px; line-height: 1.7; white-space: pre-line; color: #334155; min-height: 220px; box-shadow: inset 0 2px 4px 0 rgba(0,0,0,0.03);">
+          <%= application.message || __('appShow.noMessage') %>
+        </div>
+      </div>
+    </div>
+
+    <% if (user.role === 'company' && application.status !== 'прифатено' && application.status !== 'одбиено') { %>
+      <div style="margin-top: 3rem; padding-top: 2rem; border-top: 1px solid #e2e8f0; display: flex; gap: 1rem;">
+        <form action="/applications/status/<%= application._id %>" method="POST" style="flex: 1;">
+          <input type="hidden" name="status" value="прифатено">
+          <button type="submit" style="width: 100%; background-color: #059669; border: none; color: white; padding: 14px; border-radius: 10px; font-weight: 600; cursor: pointer; transition: opacity 0.2s;" onmouseover="this.style.opacity='0.9'" onmouseout="this.style.opacity='1'">
+            <%= __('appShow.acceptCandidate') %>
+          </button>
+        </form>
+
+        <form action="/applications/status/<%= application._id %>" method="POST" style="flex: 1;">
+          <input type="hidden" name="status" value="одбиено">
+          <button type="submit" style="width: 100%; background-color: #dc2626; border: none; color: white; padding: 14px; border-radius: 10px; font-weight: 600; cursor: pointer; transition: opacity 0.2s;" onmouseover="this.style.opacity='0.9'" onmouseout="this.style.opacity='1'">
+            <%= __('appShow.rejectApplication') %>
+          </button>
+        </form>
+      </div>
+    <% } %>
+
+    <% if (user.role === 'student' && application.status === 'прифатено' && !user.onInternship) { %>
+      <div style="margin-top: 3rem; padding: 2.5rem; background: #f0fdf4; border: 2px dashed #10b981; border-radius: 15px; text-align: center;">
+        <h3 style="color: #065f46; font-weight: 700; margin-bottom: 0.5rem;"><%= __('appShow.congratulationsTitle') %></h3>
+        <p style="color: #065f46; margin-bottom: 1.5rem; opacity: 0.8;"><%= __('appShow.congratulationsSubtitle') %></p>
+        
+        <form action="/api/auth/start-internship" method="POST">
+          <input type="hidden" name="applicationId" value="<%= application._id %>">
+          <input type="hidden" name="companyId" value="<%= application.company ? application.company._id : '' %>">
+          
+          <button type="submit" style="background-color: #10b981; color: white; padding: 16px 40px; border-radius: 12px; font-weight: 700; border: none; cursor: pointer; font-size: 1.1rem; box-shadow: 0 10px 15px -3px rgba(16, 185, 129, 0.4); transition: transform 0.2s;" onmouseover="this.style.transform='scale(1.02)'" onmouseout="this.style.transform='scale(1)'">
+            <%= __('appShow.startInternshipBtn') %>
+          </button>
+        </form>
+      </div>
+    <% } else if (user.role === 'student' && user.onInternship && application.status === 'прифатено') { %>
+      <div style="margin-top: 3rem; padding: 1.5rem; background: #eff6ff; border-radius: 12px; text-align: center; border: 1px solid #bfdbfe;">
+        <p style="color: #1e40af; font-weight: 600; margin: 0;">
+          <%= __('appShow.internshipActiveMsg') %> <a href="/dashboard" style="color: #2563eb; text-decoration: underline;"><%= __('appShow.dashboardLinkText') %></a>.
+        </p>
+      </div>
+    <% } %>
+
+  </div>
+</div>

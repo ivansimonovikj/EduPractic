@@ -1,0 +1,89 @@
+<div class="dashboard-wrapper" style="margin-top: 2rem; margin-bottom: 4rem;">
+  <div class="container">
+    <header class="mb-4" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;">
+      <div>
+        <h1 class="fw-bold"><%= user.role === 'company' ? __('applications.titleCompany') : __('applications.titleStudent') %></h1>
+        <p class="text-muted"><%= __('applications.subtitle') %></p>
+      </div>
+      <a href="/dashboard" class="btn-link" style="text-decoration: none;"><%= __('applications.backToDashboard') %></a>
+    </header>
+
+    <div class="stat-card" style="padding: 1.5rem;">
+      <% if (applications && applications.length > 0) { %>
+        
+        <div class="filter-container" style="margin-bottom: 1.5rem; display: flex; gap: 10px;">
+          <button class="btn-filter active" onclick="filterApps('all', this)"><%= __('applications.filterAll') %></button>
+          <button class="btn-filter" onclick="filterApps('active', this)"><%= __('applications.filterActive') %></button>
+          <button class="btn-filter" onclick="filterApps('completed', this)"><%= __('applications.filterCompleted') %></button>
+        </div>
+
+        <div class="table-responsive">
+          <table class="applications-table" style="width: 100%; border-collapse: separate; border-spacing: 0 12px;">
+            <thead>
+              <tr style="text-align: left; color: #64748b; font-size: 0.9rem;">
+                <th style="padding: 0 15px;"><%= __('applications.tableListing') %></th>
+                <th style="padding: 0 15px;"><%= user.role === 'company' ? __('applications.tableCandidate') : __('applications.tableCompany') %></th>
+                <th style="padding: 0 15px;"><%= __('applications.tableDate') %></th>
+                <th style="padding: 0 15px;"><%= __('applications.tableStatus') %></th>
+                <th style="padding: 0 15px; text-align: right;"><%= __('applications.tableAction') %></th>
+              </tr>
+            </thead>
+            <tbody>
+              <% applications.forEach(app => { %>
+                <tr class="app-row" data-status="<%= app.status.toLowerCase() %>" style="background: #f8fafc; border-radius: 12px; transition: 0.3s;">
+                  <td style="padding: 20px 15px; border-radius: 12px 0 0 12px;">
+                    <span style="font-weight: 600; color: #1e293b;"><%= app.listing ? app.listing.title : __('applications.deletedListing') %></span>
+                  </td>
+                  <td style="padding: 20px 15px;">
+                    <%= user.role === 'company' ? app.student.name : (app.company ? app.company.name : __('applications.notAvailable')) %>
+                  </td>
+                  <td style="padding: 20px 15px; color: #64748b;">
+                    <%= new Date(app.dateApplied).toLocaleDateString(lng === 'mk' ? 'mk-MK' : 'en-US') %>
+                  </td>
+                  <td style="padding: 20px 15px;">
+                    <% 
+                      let statusBg = '#e0e7ff'; 
+                      let statusText = '#4338ca';
+                      let rawStatus = app.status ? app.status.toLowerCase() : '';
+                      let displayStatus = app.status;
+
+                      if(rawStatus === 'прифатено' || rawStatus === 'accepted') { 
+                        statusBg = '#dcfce7'; statusText = '#166534'; 
+                        displayStatus = __('applications.statusAccepted');
+                      }
+                      else if(rawStatus === 'одбиено' || rawStatus === 'rejected') { 
+                        statusBg = '#fee2e2'; statusText = '#991b1b'; 
+                        displayStatus = __('applications.statusRejected');
+                      }
+                      else if(rawStatus === 'completed' || rawStatus === 'завршено') { 
+                        statusBg = '#f1f5f9'; statusText = '#475569'; 
+                        displayStatus = __('applications.statusCompleted');
+                      } else {
+                        displayStatus = __('applications.statusPending');
+                      }
+                    %>
+                    <span class="status-badge" style="background: <%= statusBg %>; color: <%= statusText %>; padding: 5px 12px; border-radius: 20px; font-size: 0.8rem; font-weight: 600; text-transform: uppercase;">
+                      <%= displayStatus %>
+                    </span>
+                  </td>
+                  <td style="padding: 20px 15px; border-radius: 0 12px 12px 0; text-align: right;">
+                    <a href="/applications/view/<%= app._id %>" class="btn-primary-sm" style="text-decoration: none; padding: 8px 16px; background: #4f46e5; color: white; border-radius: 8px; font-size: 0.9rem;">
+                      <%= __('applications.viewDetails') %>
+                    </a>
+                  </td>
+                </tr>
+              <% }) %>
+            </tbody>
+          </table>
+        </div>
+      <% } else { %>
+        <div style="text-align: center; padding: 3rem;">
+          <p style="font-size: 1.2rem; color: #64748b;"><%= __('applications.noApplications') %></p>
+          <a href="/dashboard" class="btn-primary-sm" style="text-decoration: none; display: inline-block; margin-top: 1rem; background: #4f46e5; color: white; padding: 10px 20px; border-radius: 8px;"><%= __('applications.goBack') %></a>
+        </div>
+      <% } %>
+    </div>
+  </div>
+</div>
+
+<script src="/js/filterApps.js"></script>

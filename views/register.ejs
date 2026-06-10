@@ -1,0 +1,91 @@
+<link
+  rel="stylesheet"
+  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+/>
+
+<div class="auth-card">
+  <h2><%= __('register.pageTitle') %></h2>
+
+  <% if(success_msg != '') { %>
+    <div class="alert alert-success"><%= success_msg %></div>
+  <% } %>
+  
+  <% if(error_msg != '') { %>
+    <div class="alert alert-danger"><%= error_msg %></div>
+  <% } %>
+
+  <form action="/api/auth/register" method="POST" id="registerForm">
+    <div class="form-group">
+      <label><%= __('register.nameLabel') %></label>
+      <input type="text" name="name" class="form-control" required />
+    </div>
+
+    <div class="form-group">
+      <label><%= __('register.emailLabel') %></label>
+      <input type="email" name="email" class="form-control" required />
+    </div>
+
+    <div class="form-group" style="position: relative">
+      <label><%= __('register.passwordLabel') %></label>
+      <input
+        type="password"
+        name="password"
+        id="password"
+        class="form-control"
+        required
+      />
+      <i
+        class="fas fa-eye toggle-password"
+        onclick="togglePass('password')"
+        style="position: absolute; right: 10px; top: 40px; cursor: pointer; color: #666;"
+      ></i>
+      <div id="password-strength-wrapper" style="margin-top: 5px;">
+        <div id="strength-bar" style="height: 5px; border-radius: 3px; transition: 0.3s;"></div>
+        <small id="strength-text"></small>
+      </div>
+    </div>
+
+    <div class="form-group" style="position: relative">
+      <label><%= __('register.confirmPasswordLabel') %></label>
+      <input
+        type="password"
+        id="confirmPassword"
+        class="form-control"
+        required
+      />
+      <i
+        class="fas fa-eye toggle-password"
+        onclick="togglePass('confirmPassword')"
+        style="position: absolute; right: 10px; top: 40px; cursor: pointer; color: #666;"
+      ></i>
+      <small id="match-text" style="display: block; margin-top: 5px"></small>
+    </div>
+
+    <div class="form-group">
+      <label><%= __('register.roleLabel') %></label>
+      <select name="role" id="roleSelect" class="form-control" onchange="toggleSchoolField()">
+        <option value="student"><%= __('register.roleStudent') %></option>
+        <option value="professor"><%= __('register.roleProfessor') %></option>
+        <option value="company"><%= __('register.roleCompany') %></option>
+      </select>
+    </div>
+
+    <div class="form-group" id="schoolGroup">
+      <label id="schoolLabel"><%= __('register.schoolLabel') %></label>
+      <input 
+        type="text" 
+        name="school" 
+        id="schoolInput" 
+        class="form-control" 
+        placeholder="<%= __('register.schoolPlaceholder') %>"
+        required
+      />
+      <small class="text-muted"><%= __('register.schoolHelp') %></small>
+    </div>
+
+    <button type="submit" class="btn" id="submitBtn" style="margin-top: 1rem;"><%= __('register.submitBtn') %></button>
+  </form>
+</div>
+
+<script src="/js/passwordCheck.js"></script>
+<script src="/js/registerUI.js"></script>

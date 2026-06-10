@@ -1,0 +1,37 @@
+<div class="notif-container">
+  <div class="notif-card">
+    <div class="notif-header">
+      <div>
+        <h1 style="margin: 0; color: #222; font-size: 1.8rem;"><%= __('professor-archive.title') %></h1>
+        <p style="margin: 5px 0 0; color: #666;"><%= __('professor-archive.subtitle') %></p>
+      </div>
+      <span class="badge-count"><%= applications.length %> <%= __('professor-archive.totalCount').replace('<%= count %>', '') %></span>
+    </div>
+
+    <div class="notif-list">
+      <% if (applications.length > 0) { %>
+        <% applications.forEach(app => { %>
+          <div class="notif-item">
+            <div>
+              <p class="notif-text">
+                <strong><%= app.student.name %></strong> - <%= app.company.name %>
+              </p>
+              <span class="notif-date">
+                <%= __('professor-archive.internshipCompleted') %> <%= new Date(app.updatedAt).getFullYear() %> <%= lng === 'mk' ? 'година' : 'year' %>
+              </span>
+            </div>
+            <a href="/professor/view-log/<%= app._id %>" class="btn-view" style="background: #6c757d;"><%= __('professor-archive.viewLog') %></a>
+          </div>
+        <% }) %>
+      <% } else { %>
+        <div class="empty-state">
+          <p><%= __('professor-archive.emptyArchive') %></p>
+        </div>
+      <% } %>
+    </div>
+
+    <div style="margin-top: 30px; text-align: center;">
+      <a href="/professor/dashboard" style="color: #666; text-decoration: none; font-size: 0.9rem;"><%= __('professor-archive.backToPanel') %></a>
+    </div>
+  </div>
+</div>

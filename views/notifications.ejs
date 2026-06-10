@@ -1,0 +1,38 @@
+<div class="notif-container">
+    <div class="notif-card">
+        <div class="notif-header">
+            <div>
+                <h1 style="margin: 0; color: #222; font-size: 1.8rem;"><%= __('notifications.title') %></h1>
+                <p style="margin: 5px 0 0; color: #666;"><%= __('notifications.subtitle') %></p>
+            </div>
+            <span class="badge-count"><%= notifications.length %> <%= __('notifications.totalCount').replace('<%= count %>', '') %></span>
+        </div>
+
+        <div class="notif-list">
+            <% if (notifications.length > 0) { %>
+                <% notifications.forEach(notif => { %>
+                    <div class="notif-item">
+                        <div>
+                            <p class="notif-text"><%= notif.message %></p>
+                            <span class="notif-date">
+                                📅 <%= new Date(notif.createdAt).toLocaleDateString(lng === 'mk' ? 'mk-MK' : 'en-US') %> 
+                                🕒 <%= new Date(notif.createdAt).toLocaleTimeString(lng === 'mk' ? 'mk-MK' : 'en-US', {hour: '2-digit', minute:'2-digit'}) %>
+                            </span>
+                        </div>
+                        <% if (notif.link) { %>
+                            <a href="<%= notif.link %>" class="btn-view"><%= __('notifications.viewDetails') %></a>
+                        <% } %>
+                    </div>
+                <% }) %>
+            <% } else { %>
+                <div class="empty-state">
+                    <p><%= __('notifications.noNewNotifications') %></p>
+                </div>
+            <% } %>
+        </div>
+
+        <div style="margin-top: 30px; text-align: center;">
+            <a href="/professor/dashboard" style="color: #666; text-decoration: none; font-size: 0.9rem;"><%= __('notifications.backToDashboard') %></a>
+        </div>
+    </div>
+</div>

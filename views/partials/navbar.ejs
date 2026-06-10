@@ -1,0 +1,74 @@
+<nav class="navbar">
+  <div class="container">
+    <a class="logo" href="/">EduPractic</a>
+
+    <button class="mobile-toggle" id="mobile-menu-btn">
+      <i class="fas fa-bars"></i>
+    </button>
+
+    <div class="nav-content" id="nav-content">
+      <ul class="nav-links">
+        <li><a href="/"><%= __('nav.home') %></a></li>
+
+        <% if (user) { %>
+          <li><a href="/dashboard"><%= __('nav.dashboard') %></a></li>
+          <li><a href="/profile"><%= __('nav.profile') %></a></li>
+        <% } else { %>
+          <li><a href="/api/auth/login"><%= __('nav.login') %></a></li>
+        <% } %>
+      </ul>
+
+      <div class="nav-actions">
+        <div class="lang-switcher">
+          <a href="<%= updateLngUrl('en') %>" class="lang-btn <%= lng === 'en' ? 'active-lang' : '' %>">EN</a>
+          <a href="<%= updateLngUrl('mk') %>" class="lang-btn <%= lng === 'mk' ? 'active-lang' : '' %>">MK</a>
+        </div>
+
+        <% if (user) { %>
+          <% if (user.role === 'professor') { %>
+            <div class="notification-dropdown">
+              <a href="#" id="notifBtn" class="notif-trigger">
+                <i class="fas fa-bell"></i>
+                <% if (unreadCount > 0) { %>
+                  <span class="notif-badge"><%= unreadCount %></span>
+                <% } %>
+              </a>
+
+              <div id="notifMenu" class="notif-menu">
+                <div class="notif-header"><%= __('nav.notifications') %></div>
+                <div class="notif-body">
+                  <% if (notifications && notifications.length > 0) { %>
+                    <% notifications.forEach(notif => { %>
+                      <a href="<%= notif.link %>" class="notif-item <%= notif.isRead ? '' : 'unread' %>">
+                        <div class="notif-icon"><i class="fas fa-check-circle"></i></div>
+                        <div class="notif-content">
+                          <p><%= notif.message %></p>
+                          <span class="notif-time"><%= new Date(notif.createdAt).toLocaleDateString(lng === 'mk' ? 'mk-MK' : 'en-US') %></span>
+                        </div>
+                      </a>
+                    <% }) %>
+                    <a href="/notifications" class="notif-footer"><%= __('nav.viewAll') %></a>
+                  <% } else { %>
+                    <div class="notif-empty"><%= __('nav.noNewNotifications') %></div>
+                  <% } %>
+                </div>
+              </div>
+            </div>
+          <% } %>
+
+          <a href="/api/auth/logout" class="btn btn-danger"><%= __('nav.logout') %></a>
+        <% } else { %>
+          <a href="/api/auth/register" class="btn btn-primary"><%= __('nav.register') %></a>
+        <% } %>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<script src="/js/notifications.js"></script>
+<script>
+  // Simple mobile toggle script
+  document.getElementById('mobile-menu-btn').addEventListener('click', function() {
+    document.getElementById('nav-content').classList.toggle('active');
+  });
+</script>

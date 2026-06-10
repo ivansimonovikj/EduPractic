@@ -1,0 +1,82 @@
+<div class="form-container-wide">
+  <div class="auth-card form-container-wide">
+    <h2 style="text-align: left; margin-bottom: 0.5rem">
+      <%= __('listings-create.createTitle') %>
+    </h2>
+    <p class="text-muted" style="margin-bottom: 2rem; font-size: 1rem">
+      <%= __('listings-create.createSubtitle') %>
+    </p>
+
+    <form action="/listings/create" method="POST">
+      <div
+        style="display: flex; gap: 20px; flex-wrap: wrap; margin-bottom: 1.5rem"
+      >
+        <div style="flex: 2; min-width: 250px">
+          <div class="form-group">
+            <label><%= __('listings-create.labelTitle') %></label>
+            <input
+              type="text"
+              name="title"
+              class="form-control"
+              placeholder="<%= __('listings-create.placeholderTitle') %>"
+              required
+            />
+          </div>
+        </div>
+
+        <div style="flex: 1; min-width: 200px">
+          <div class="form-group">
+            <label><%= __('listings-create.labelLocation') %></label>
+            <input
+              type="text"
+              name="location"
+              class="form-control"
+              placeholder="<%= __('listings-create.placeholderLocation') %>"
+              required
+            />
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group" style="margin-bottom: 1.5rem">
+        <label><%= __('listings-create.labelRequirements') %></label>
+        <small class="label-help"
+          ><%= __('listings-create.labelReqHelp') %></small
+        >
+        <input
+          type="text"
+          name="requirements"
+          class="form-control"
+          placeholder="<%= __('listings-create.placeholderRequirements') %>"
+        />
+      </div>
+
+      <div class="form-group" style="margin-bottom: 2rem">
+        <label><%= __('listings-create.labelDescription') %></label>
+        <textarea
+          name="description"
+          class="form-control"
+          placeholder="<%= __('listings-create.placeholderDescription') %>"
+          required
+        ></textarea>
+      </div>
+
+      <div style="display: flex; gap: 15px; align-items: center">
+        <button
+          type="submit"
+          class="btn"
+          style="width: auto; padding: 0.8rem 2.5rem"
+        >
+          <%= __('listings-create.buttonPublish') %>
+        </button>
+        <a
+          href="/dashboard"
+          class="btn-link"
+          style="text-decoration: none; color: var(--secondary)"
+        >
+          <%= __('listings-create.buttonCancel') %>
+        </a>
+      </div>
+    </form>
+  </div>
+</div>

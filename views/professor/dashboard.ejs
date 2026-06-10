@@ -1,0 +1,241 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+<div class="hub-container" style="max-width: 1400px; margin: 0 auto; padding: 2rem 1rem; font-family: 'Inter', sans-serif; background: #f8fafc; min-height: 100vh;">
+
+    <header class="hub-header" style="margin-bottom: 2.5rem; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1.5rem; background: white; padding: 1.5rem; border-radius: 24px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);">
+        <div class="header-info">
+            <h1 class="hub-title" style="margin: 0; color: #1e293b; font-size: clamp(1.5rem, 4vw, 2rem); font-weight: 800;"><%= __('professorDashboard.panelTitle') %></h1>
+            <div style="margin-top: 0.4rem; color: #64748b; font-size: 0.95rem; display: flex; align-items: center; flex-wrap: wrap; gap: 8px;">
+                <span style="background: #eef2ff; color: #6366f1; padding: 4px 12px; border-radius: 20px; font-weight: 700;"><%= user.school %></span>
+                <span style="color: #cbd5e1; display: inline-block;">•</span>
+                <span><%= __('professorDashboard.schoolLabel') %></span>
+            </div>
+        </div>
+        
+        <div class="header-actions" style="display: flex; align-items: center; flex-wrap: wrap; gap: 20px;">
+            <a href="/professor/archive" class="btn-archive-link" style="text-decoration: none; display: flex; align-items: center; gap: 8px; background: #f1f5f9; color: #475569; padding: 12px 20px; border-radius: 14px; font-weight: 700; transition: all 0.2s;">
+                <i class="fas fa-box-archive"></i> <%= __('professorDashboard.archiveLink') %>
+            </a>
+
+            <div class="stats-mini" style="text-align: right; border-left: 2px solid #f1f5f9; padding-left: 20px;">
+                <span style="display: block; font-size: 0.75rem; color: #94a3b8; font-weight: 700; text-transform: uppercase;"><%= __('professorDashboard.myStudents') %></span>
+                <span style="font-size: 1.5rem; font-weight: 800; color: #1e293b;"><%= managedStudents.length %></span>
+            </div>
+        </div>
+    </header>
+
+    <div class="settings-bar" style="background: white; padding: 1.2rem 1.5rem; border-radius: 20px; margin-bottom: 2rem; box-shadow: 0 10px 15px -3px rgba(0,0,0,0.05); display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 15px; border-left: 6px solid #6366f1;">
+        <div>
+            <h4 style="margin: 0; color: #1e293b; font-size: 1rem; font-weight: 700;"><%= __('professorDashboard.systemQuotaTitle') %></h4>
+            <p style="margin: 0; font-size: 0.85rem; color: #64748b;"><%= __('professorDashboard.systemQuotaDesc') %></p>
+        </div>
+        <form action="/professor/update-global-days" method="POST" style="display: flex; gap: 10px; align-items: center;">
+            <input type="number" name="defaultDays" value="<%= user.defaultPracticeDays || 21 %>" style="width: 70px; padding: 8px; text-align: center; border: 2px solid #f1f5f9; border-radius: 10px; font-weight: 800; color: #6366f1; outline: none;">
+            <button type="submit" style="padding: 10px 18px; background: #6366f1; color: white; border: none; border-radius: 10px; cursor: pointer; font-weight: 700; font-size: 0.85rem;"><%= __('professorDashboard.updateButton') %></button>
+        </form>
+    </div>
+
+    <main class="hub-grid" style="display: grid; grid-template-columns: 1fr 340px; gap: 2rem; align-items: start;">
+
+        <div class="table-card" style="background: white; border-radius: 24px; box-shadow: 0 10px 15px -3px rgba(0,0,0,0.05); border: 1px solid #f1f5f9; overflow: hidden; max-width: 100%;">
+            <div style="padding: 1.5rem; border-bottom: 1px solid #f1f5f9; background: #fff; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;">
+                <h5 style="margin: 0; color: #1e293b; font-size: 1.1rem; font-weight: 800;"><%= __('professorDashboard.activeMonitoring') %></h5>
+                
+                <form id="bulkArchiveForm" action="/professor/bulk-archive" method="POST" style="margin: 0; display: none;">
+                    <input type="hidden" name="selectedIds" id="selectedIdsInput">
+                    <button type="submit" style="background: #10b981; color: white; border: none; padding: 10px 20px; border-radius: 12px; font-weight: 800; font-size: 0.8rem; cursor: pointer; display: flex; align-items: center; gap: 8px; box-shadow: 0 4px 10px rgba(16, 185, 129, 0.2);">
+                        <i class="fas fa-file-export"></i> <%= __('professorDashboard.bulkArchiveButton') %> (<span id="selectedCount">0</span>)
+                    </button>
+                </form>
+            </div>
+
+            <div class="scroll-wrapper" style="overflow-x: auto; width: 100%; -webkit-overflow-scrolling: touch;">
+                <table style="width: 100%; border-collapse: collapse; min-width: 900px;">
+                    <thead>
+                        <tr style="text-align: left; background: #f8fafc; border-bottom: 1px solid #f1f5f9;">
+                            <th style="padding: 1rem; width: 40px;">
+                                <input type="checkbox" id="selectAll" style="cursor: pointer; transform: scale(1.2);">
+                            </th>
+                            <th style="padding: 1rem; font-size: 0.7rem; color: #64748b; text-transform: uppercase; letter-spacing: 0.05em;"><%= __('professorDashboard.studentsTable.student') %></th>
+                            <th style="padding: 1rem; font-size: 0.7rem; color: #64748b; text-transform: uppercase; letter-spacing: 0.05em;"><%= __('professorDashboard.studentsTable.company') %></th>
+                            <th style="padding: 1rem; font-size: 0.7rem; color: #64748b; text-transform: uppercase; letter-spacing: 0.05em;"><%= __('professorDashboard.studentsTable.progress') %></th>
+                            <th style="padding: 1rem; font-size: 0.7rem; color: #64748b; text-transform: uppercase; letter-spacing: 0.05em;"><%= __('professorDashboard.studentsTable.management') %></th>
+                            <th style="padding: 1rem; font-size: 0.7rem; color: #64748b; text-transform: uppercase; letter-spacing: 0.05em;"><%= __('professorDashboard.studentsTable.log') %></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% if (activeApps.length > 0) { %>
+                            <% activeApps.forEach(app => { 
+                                const total = (app.activitiesCount || 0) + (app.excusedDays || 0);
+                                const progress = Math.min(100, (total / app.requiredDays) * 100);
+                                const isFinished = total >= app.requiredDays;
+                            %>
+                            <tr style="border-bottom: 1px solid #f8fafc; transition: all 0.2s;">
+                                <td style="padding: 1.2rem 1rem;">
+                                    <% if (isFinished) { %>
+                                        <input type="checkbox" class="app-checkbox" value="<%= app._id %>" style="cursor: pointer; transform: scale(1.2);">
+                                    <% } %>
+                                </td>
+                                <td style="padding: 1.2rem 1rem;">
+                                    <div style="display: flex; align-items: center; gap: 12px;">
+                                        <% if (app.pendingPing) { %>
+                                            <div class="ping-dot" title="<%= __('professorDashboard.studentsTable.activityNeeded') %>"></div>
+                                        <% } %>
+                                        <div>
+                                            <strong style="color: #1e293b; display: block; font-size: 0.9rem; white-space: nowrap;"><%= app.student.name %></strong>
+                                            <span style="color: #94a3b8; font-size: 0.75rem;"><%= app.student.email %></span>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td style="padding: 1.2rem 1rem;">
+                                    <span style="background: #f1f5f9; padding: 6px 12px; border-radius: 8px; font-size: 0.75rem; font-weight: 700; color: #475569; white-space: nowrap;">
+                                        <%= app.company.name %>
+                                    </span>
+                                </td>
+                                <td style="padding: 1.2rem 1rem;">
+                                    <div style="background: #f1f5f9; height: 8px; border-radius: 10px; width: 110px; margin-bottom: 6px; overflow: hidden;">
+                                        <div style="width: <%= progress %>%; height: 100%; background: <%= isFinished ? '#10b981' : '#6366f1' %>; transition: width 0.5s ease;"></div>
+                                    </div>
+                                    <small style="font-weight: 800; color: #334155; white-space: nowrap;"><%= total %> / <%= app.requiredDays %> <%= lng === 'mk' ? 'дена' : 'days' %></small>
+                                </td>
+                                <td style="padding: 1.2rem 1rem;">
+                                    <% if (isFinished) { %>
+                                        <div style="display: flex; gap: 8px; min-width: 180px;">
+                                            <a href="/professor/generate-report/<%= app._id %>" style="background: #1e293b; color: white; padding: 10px; border-radius: 10px; text-decoration: none; width: 45px; display: flex; align-items: center; justify-content: center;" title="<%= __('professorDashboard.archiveConfirm') %>">
+                                                <i class="fas fa-file-pdf"></i>
+                                            </a>
+                                            <form action="/professor/archive-application" method="POST" style="flex: 1; margin: 0;">
+                                                <input type="hidden" name="applicationId" value="<%= app._id %>">
+                                                <button type="submit" style="width: 100%; background: #10b981; color: white; border: none; padding: 10px; border-radius: 10px; font-weight: 800; font-size: 0.75rem; cursor: pointer; white-space: nowrap;"><%= __('professorDashboard.archiveConfirm') %></button>
+                                            </form>
+                                        </div>
+                                    <% } else { %>
+                                        <div style="display: flex; gap: 8px; min-width: 180px;">
+                                            <form action="/professor/excuse-day" method="POST" style="flex: 1; margin: 0;">
+                                                <input type="hidden" name="applicationId" value="<%= app._id %>">
+                                                <button type="submit" style="width: 100%; background: #fef9c3; border: 2px solid #fde047; color: #854d0e; padding: 10px 5px; border-radius: 10px; font-size: 0.8rem; font-weight: 800; cursor: pointer; white-space: nowrap;"><%= __('professorDashboard.excuseButton') %></button>
+                                            </form>
+                                            <form action="/professor/ping-student" method="POST" style="flex: 1; margin: 0;">
+                                                <input type="hidden" name="applicationId" value="<%= app._id %>">
+                                                <button type="submit" style="width: 100%; background: #fee2e2; border: 2px solid #fecaca; color: #dc2626; padding: 10px 5px; border-radius: 10px; font-size: 0.8rem; font-weight: 800; cursor: pointer; white-space: nowrap;"><%= __('professorDashboard.remindButton') %></button>
+                                            </form>
+                                        </div>
+                                    <% } %>
+                                </td>
+                                <td style="padding: 1.2rem 1rem;">
+                                    <a href="/professor/view-log/<%= app._id %>" style="background: #6366f1; color: white; text-decoration: none; padding: 10px 14px; border-radius: 12px; font-size: 0.75rem; font-weight: 700; display: inline-flex; align-items: center; gap: 6px; white-space: nowrap;">
+                                        <i class="fas fa-search"></i> <%= __('professorDashboard.reviewButton') %>
+                                    </a>
+                                </td>
+                            </tr>
+                        <% }) %>
+                        <% } else { %>
+                            <tr><td colspan="6" style="padding: 4rem; text-align: center; color: #94a3b8;"><%= __('professorDashboard.noActive') %></td></tr>
+                        <% } %>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <aside class="sidebar" style="background: white; border-radius: 24px; padding: 1.5rem; border: 2px dashed #e2e8f0; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05); position: sticky; top: 20px;">
+            <h6 style="margin: 0 0 1.2rem 0; color: #475569; text-transform: uppercase; font-size: 0.75rem; font-weight: 800; letter-spacing: 0.1em; display: flex; align-items: center; gap: 8px;">
+                <i class="fas fa-user-plus" style="color: #10b981;"></i> <%= __('professorDashboard.availableStudents') %>
+            </h6>
+            <% const available = students.filter(s => !user.managedStudents.includes(s._id.toString())); %>
+            <% if (available.length > 0) { %>
+                <div style="max-height: 500px; overflow-y: auto; padding-right: 5px;" class="custom-scroll">
+                    <% available.forEach(u => { %>
+                        <div style="padding: 15px; border: 1px solid #f1f5f9; border-radius: 16px; margin-bottom: 12px; background: #fafafa; border-left: 4px solid #cbd5e1; transition: transform 0.2s;">
+                            <div style="font-weight: 800; font-size: 0.85rem; color: #1e293b;"><%= u.name %></div>
+                            <div style="font-size: 0.7rem; color: #94a3b8; margin-bottom: 12px;"><%= u.email %></div>
+                            <form action="/professor/claim-student" method="POST" style="margin: 0;">
+                                <input type="hidden" name="studentId" value="<%= u._id %>">
+                                <button type="submit" style="width: 100%; background: #10b981; color: white; border: none; padding: 10px; border-radius: 12px; font-weight: 800; font-size: 0.75rem; cursor: pointer; transition: background 0.2s;">
+                                    <%= __('professorDashboard.takeUnderSupervision') %>
+                                </button>
+                            </form>
+                        </div>
+                    <% }) %>
+                </div>
+            <% } else { %>
+                <div style="text-align: center; padding: 3rem 0; background: #f8fafc; border-radius: 16px;">
+                    <i class="fas fa-check-double" style="color: #cbd5e1; font-size: 2rem; margin-bottom: 12px;"></i>
+                    <p style="font-size: 0.8rem; color: #94a3b8; margin: 0; padding: 0 10px;"><%= __('professorDashboard.allAssignedMsg') %></p>
+                </div>
+            <% } %>
+        </aside>
+    </main>
+</div>
+
+<script src="/js/bulkApplications.js"></script>
+
+<style>
+    /* Desktop interactions */
+    .btn-archive-link:hover {
+        background: #e2e8f0 !important;
+        color: #1e293b !important;
+        transform: translateY(-1px);
+    }
+    
+    /* Smooth, modern scrollbars for the table and sidebar */
+    .scroll-wrapper::-webkit-scrollbar { height: 8px; }
+    .scroll-wrapper::-webkit-scrollbar-track { background: #f1f5f9; border-radius: 10px; margin: 0 10px; }
+    .scroll-wrapper::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; border: 2px solid #f1f5f9; }
+    .scroll-wrapper::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+    
+    .custom-scroll::-webkit-scrollbar { width: 5px; }
+    .custom-scroll::-webkit-scrollbar-track { background: transparent; }
+    .custom-scroll::-webkit-scrollbar-thumb { background: #e2e8f0; border-radius: 10px; }
+    
+    /* Urgent Ping Animation */
+    .ping-dot {
+        width: 12px; height: 12px; background: #dc2626; border-radius: 50%;
+        animation: pulse-red 1.5s infinite;
+        box-shadow: 0 0 0 0 rgba(220, 38, 38, 0.7);
+        flex-shrink: 0;
+    }
+    
+    @keyframes pulse-red {
+        0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(220, 38, 38, 0.7); }
+        70% { transform: scale(1.1); box-shadow: 0 0 0 8px rgba(220, 38, 38, 0); }
+        100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(220, 38, 38, 0); }
+    }
+    
+    tr:hover { background-color: #fcfdfe !important; }
+
+    /* =========================================
+       RESPONSIVE CSS FIXES
+       ========================================= */
+    @media (max-width: 1100px) {
+        .hub-grid { 
+            grid-template-columns: 1fr !important; 
+        }
+        .sidebar { 
+            position: static !important; 
+            width: 100% !important; 
+        }
+    }
+
+    @media (max-width: 768px) {
+        /* Force the header elements to center stack on very small screens */
+        .hub-header {
+            flex-direction: column;
+            align-items: flex-start;
+        }
+        .header-actions {
+            width: 100%;
+            justify-content: space-between;
+            margin-top: 10px;
+        }
+        .settings-bar {
+            flex-direction: column;
+            align-items: flex-start;
+        }
+        
+        /* Mobile Scroll Hint - A subtle inner shadow to indicate there is more table to the right */
+        .scroll-wrapper {
+            box-shadow: inset -15px 0 15px -15px rgba(0,0,0,0.15);
+            padding-bottom: 10px; /* Give the thumb some breathing room */
+        }
+    }
+</style>

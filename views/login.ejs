@@ -1,0 +1,98 @@
+<div class="auth-card">
+  <h2><%= __('login.title') %></h2>
+
+  <% if(locals.success_msg && success_msg != '') { %>
+      <div class="alert alert-success"><%= success_msg %></div>
+  <% } %>
+
+  <% if(locals.error_msg && error_msg != '') { %>
+      <div class="alert alert-danger"><%= error_msg %></div>
+  <% } %>
+
+  <% if(locals.error && error != '') { %>
+      <div class="alert alert-danger"><%= error %></div>
+  <% } %>
+
+  <form action="/api/auth/login" method="POST">
+    <div class="form-group">
+      <label><%= __('login.emailLabel') %></label>
+      <input
+        type="email"
+        name="email"
+        class="form-control"
+        placeholder="<%= __('login.emailPlaceholder') %>"
+        required
+      />
+    </div>
+
+    <div class="form-group" style="position: relative">
+      <label><%= __('login.passwordLabel') %></label>
+      <input
+        type="password"
+        name="password"
+        id="password"
+        class="form-control"
+        placeholder="<%= __('login.passwordPlaceholder') %>"
+        required
+      />
+      <i
+        class="fas fa-eye toggle-password"
+        onclick="togglePass('password')"
+      ></i>
+    </div>
+
+    <div
+      class="auth-options"
+      style="
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 1.5rem;
+      "
+    >
+      <label
+        style="
+          display: flex;
+          align-items: center;
+          font-size: 0.85rem;
+          cursor: pointer;
+          color: var(--secondary);
+        "
+      >
+        <input
+          type="checkbox"
+          name="remember"
+          style="margin-right: 8px; width: auto; height: auto"
+        />
+        <%= __('login.rememberMe') %>
+      </label>
+      <a
+        href="/api/auth/forgot-password"
+        style="
+          font-size: 0.85rem;
+          color: var(--primary);
+          text-decoration: none;
+          font-weight: 500;
+        "
+      >
+        <%= __('login.forgotPassword') %>
+      </a>
+    </div>
+
+    <button type="submit" class="btn"><%= __('login.submitBtn') %></button>
+
+    <div class="auth-footer" style="margin-top: 20px; text-align: center">
+      <p style="font-size: 0.9rem; color: var(--secondary)">
+        <%= __('login.noAccountMsg') %>
+        <a
+          href="/api/auth/register"
+          style="color: var(--primary); text-decoration: none; font-weight: 600"
+        >
+          <%= __('login.registerLink') %>
+        </a>
+      </p>
+    </div>
+  </form>
+</div>
+
+<script src="/js/passwordCheck.js"></script>

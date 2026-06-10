@@ -1,0 +1,1513 @@
+/* ========================================================
+   1. ВАРИЈАБЛИ
+   ======================================================== */
+:root {
+  --primary: #2563eb;
+  --primary-hover: #1d4ed8;
+  --secondary: #64748b;
+  --success: #22c55e;
+  --dark: #1e293b;
+  --light-bg: #f1f5f9;
+  --white: #ffffff;
+  --shadow:
+    0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+}
+
+/* ========================================================
+   2. РЕСЕТ И ОСНОВИ
+   ======================================================== */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html,
+body {
+  min-height: 100vh;
+}
+
+body {
+  font-family:
+    "Inter",
+    system-ui,
+    -apple-system,
+    sans-serif;
+  background-color: var(--light-bg);
+  color: var(--dark);
+  line-height: 1.6;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ========================================================
+   3. LAYOUT СТРУКТУРА
+   ======================================================== */
+main {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem 1rem;
+  width: 100%;
+}
+
+.footer {
+  background: var(--white);
+  padding: 1.5rem;
+  text-align: center;
+  color: var(--secondary);
+  font-size: 0.875rem;
+  border-top: 1px solid #e2e8f0;
+  width: 100%;
+  margin-top: auto;
+  flex-shrink: 0;
+}
+
+/* ========================================================
+   4. NAVBAR (UPDATED FOR RESPONSIVENESS)
+   ======================================================== */
+.navbar {
+  background: var(--white);
+  padding: 1rem 2rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.navbar .container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.logo {
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: var(--primary);
+  text-decoration: none;
+  letter-spacing: -0.5px;
+  flex-shrink: 0;
+}
+
+/* MOBILE TOGGLE BUTTON */
+.mobile-toggle {
+  display: none;
+  background: none;
+  border: none;
+  font-size: 1.75rem;
+  cursor: pointer;
+  color: var(--primary);
+  padding: 0.5rem;
+}
+
+/* NAV CONTENT AND LINKS */
+.nav-content {
+  display: flex;
+  align-items: center;
+  gap: 2.5rem;
+  margin-left: auto;
+  flex-wrap: wrap;
+}
+
+.nav-links {
+  display: flex;
+  list-style: none;
+  gap: 1.5rem;
+  margin: 0 0 0 2rem;
+  padding: 0;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.nav-links a {
+  text-decoration: none;
+  color: var(--secondary);
+  font-weight: 500;
+  transition: color 0.2s;
+  white-space: nowrap;
+}
+
+.nav-links a:hover,
+.nav-links a:focus {
+  color: var(--primary);
+}
+
+/* NAV ACTIONS */
+.nav-actions {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-left: auto;
+  flex-wrap: wrap;
+}
+
+/* LANGUAGE SWITCHER */
+.lang-switcher {
+  display: inline-flex;
+  background-color: #f1f5f9;
+  border-radius: 50px;
+  padding: 4px;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.lang-btn {
+  padding: 6px 16px;
+  font-size: 0.85rem;
+  font-weight: 700;
+  text-decoration: none;
+  color: #64748b;
+  border-radius: 50px;
+  transition: all 0.3s ease;
+  user-select: none;
+}
+
+.lang-btn.active-lang {
+  background-color: var(--primary);
+  color: white;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+}
+
+.lang-btn:hover:not(.active-lang),
+.lang-btn:focus:not(.active-lang) {
+  background-color: #e2e8f0;
+  color: var(--primary);
+}
+
+/* RESPONSIVE NAVBAR: MOBILE */
+@media screen and (max-width: 768px) {
+  .mobile-toggle {
+    display: block;
+    order: 2;
+  }
+
+  .nav-content {
+    display: none;
+    flex-direction: column;
+    position: absolute;
+    top: calc(100% + 10px);
+    left: 0;
+    width: 100%;
+    background-color: var(--white);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    padding: 1.5rem 2rem;
+    gap: 2rem;
+    align-items: center;
+    border-top: 1px solid #e2e8f0;
+    max-height: calc(100vh - 60px);
+    overflow-y: auto;
+    z-index: 1100;
+    border-radius: 0 0 12px 12px;
+  }
+
+  .nav-content.active {
+    display: flex;
+  }
+
+  .nav-links {
+    flex-direction: column;
+    width: 100%;
+    gap: 1.5rem;
+    margin: 0;
+    padding: 0;
+    align-items: center;
+  }
+
+  .nav-links a {
+    font-size: 1.1rem;
+  }
+
+  .nav-actions {
+    flex-direction: column;
+    width: 100%;
+    justify-content: center;
+    gap: 1rem;
+  }
+}
+
+/* ========================================================
+   5. ФОРМИ И АВТЕНТИКАЦИЈА
+   ======================================================== */
+.auth-card {
+  background: var(--white);
+  width: 100%;
+  max-width: 440px;
+  padding: 2.5rem;
+  border-radius: 12px;
+  box-shadow: var(--shadow);
+  margin: 2rem auto;
+  position: relative;
+}
+
+.auth-card h2 {
+  margin-bottom: 2rem;
+  font-size: 1.75rem;
+  text-align: center;
+  color: #1a202c;
+}
+
+.form-group {
+  margin-bottom: 1.5rem;
+  position: relative;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+  font-size: 0.875rem;
+  color: #4a5568;
+}
+
+.form-control {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  font-size: 1rem;
+  transition: all 0.2s;
+  box-sizing: border-box;
+}
+
+.form-control:focus {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+}
+
+.form-control:disabled {
+  background-color: #f8fafc;
+  color: #94a3b8;
+  cursor: not-allowed;
+  border-style: dashed;
+}
+
+.toggle-password {
+  position: absolute;
+  right: 15px;
+  top: 42px;
+  cursor: pointer;
+  color: #a0aec0;
+  z-index: 10;
+  transition: color 0.2s;
+}
+
+.toggle-password:hover {
+  color: var(--primary);
+}
+
+#password-strength-wrapper {
+  width: 100%;
+  background-color: #e2e8f0;
+  border-radius: 2px;
+  height: 5px;
+  display: none;
+  margin-top: 5px;
+}
+.strength-weak {
+  background-color: #ef4444 !important;
+  width: 33% !important;
+}
+.strength-medium {
+  background-color: #f59e0b !important;
+  width: 66% !important;
+}
+.strength-strong {
+  background-color: #22c55e !important;
+  width: 100% !important;
+}
+
+.btn {
+  width: 100%;
+  padding: 0.8rem;
+  background-color: var(--primary);
+  color: var(--white);
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition:
+    background 0.2s,
+    transform 0.1s;
+  margin-top: 0.5rem;
+}
+
+.btn:hover {
+  background-color: var(--primary-hover);
+}
+.btn:active {
+  transform: scale(0.98);
+}
+.btn:disabled {
+  background-color: #cbd5e0;
+  cursor: not-allowed;
+}
+
+.btn-link {
+  font-size: 0.9rem;
+  font-weight: 500;
+  transition: color 0.2s;
+  cursor: pointer;
+  background: none;
+  border: none;
+  color: var(--secondary);
+}
+.btn-link:hover {
+  color: var(--primary) !important;
+  text-decoration: underline !important;
+}
+
+/* ========================================================
+   6. ИЗВЕСТУВАЊА (ALERTS)
+   ======================================================== */
+.alert {
+  padding: 1rem;
+  margin-bottom: 1.5rem;
+  border-radius: 10px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  text-align: center;
+  border: 1px solid transparent;
+  animation: fadeInDown 0.4s ease-out;
+}
+.alert-success {
+  background-color: #d1fae5;
+  color: #065f46;
+  border-color: #10b981;
+}
+.alert-danger {
+  background-color: #fee2e2;
+  color: #991b1b;
+  border-color: #ef4444;
+}
+
+@keyframes fadeInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-15px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ========================================================
+   7. WELCOME PAGE
+   ======================================================== */
+.welcome-wrapper {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+main:has(.welcome-wrapper) {
+  display: block;
+  padding: 0;
+}
+
+.hero {
+  background: linear-gradient(135deg, var(--primary) 0%, #4f46e5 100%);
+  color: var(--white);
+  padding: 6rem 1.5rem;
+  text-align: center;
+}
+
+.hero-title {
+  font-size: clamp(2.5rem, 5vw, 4rem);
+  font-weight: 800;
+  line-height: 1.1;
+  margin-bottom: 1.5rem;
+}
+
+.hero-subtitle {
+  font-size: 1.25rem;
+  max-width: 700px;
+  margin: 0 auto 2.5rem;
+  opacity: 0.9;
+}
+
+.hero-actions {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+}
+
+.btn-primary-lg,
+.btn-outline {
+  padding: 1rem 2rem;
+  border-radius: 0.5rem;
+  font-weight: 700;
+  text-decoration: none;
+  transition: transform 0.2s;
+  display: inline-block;
+}
+
+.btn-primary-lg {
+  background: var(--white);
+  color: var(--primary);
+}
+.btn-outline {
+  background: transparent;
+  color: var(--white);
+  border: 2px solid var(--white);
+}
+
+.btn-primary-lg:hover,
+.btn-outline:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+}
+
+.features-section {
+  padding: 5rem 1.5rem;
+  background: var(--white);
+}
+.features-grid {
+  max-width: 1100px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2.5rem;
+}
+.feature-item {
+  text-align: center;
+  padding: 2rem;
+  border-radius: 1rem;
+  transition: 0.3s;
+}
+.feature-item:hover {
+  background: var(--light-bg);
+}
+.feature-icon {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+}
+
+/* ========================================================
+   8. DASHBOARD & PROFILE
+   ======================================================== */
+main:has(.dashboard-wrapper) {
+  display: block;
+  padding: 2rem 0;
+  width: 100%;
+}
+
+.dashboard-wrapper .container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+.stat-card {
+  background: var(--white);
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: var(--shadow);
+  border-top: 4px solid var(--primary);
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  transition: transform 0.2s;
+}
+
+.stat-card:hover {
+  transform: translateY(-5px);
+}
+.stat-card h3 {
+  font-size: 1.4rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+  color: var(--dark);
+}
+
+.btn-primary-sm {
+  display: inline-block;
+  width: fit-content;
+  padding: 0.6rem 1.5rem;
+  background-color: var(--primary);
+  color: white;
+  text-decoration: none;
+  border-radius: 8px;
+  font-weight: 600;
+  margin-top: 1rem;
+}
+
+main:has(.auth-card) {
+  min-height: 80vh;
+}
+.text-muted {
+  font-size: 0.75rem;
+  color: var(--secondary);
+  margin-top: 0.25rem;
+  display: block;
+}
+
+.profile-updated-pulse {
+  animation: pulse-green 2s infinite;
+}
+@keyframes pulse-green {
+  0% {
+    box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.4);
+  }
+  70% {
+    box-shadow: 0 0 0 10px rgba(34, 197, 94, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(34, 197, 94, 0);
+  }
+}
+
+/* ========================================================
+   9. CREATE LISTING & TABLES
+   ======================================================== */
+.form-container-wide {
+  width: 95%;
+  max-width: 850px;
+  margin: 2rem auto;
+}
+textarea.form-control {
+  min-height: 150px;
+  resize: vertical;
+  line-height: 1.6;
+  padding: 1rem;
+}
+input[name="requirements"] {
+  border-bottom: 2px solid var(--secondary);
+  background-color: #fdfdfd;
+  border-radius: 8px 8px 0 0;
+}
+input[name="requirements"]:focus {
+  border-bottom: 2px solid var(--primary);
+}
+
+.filter-container {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 1.5rem;
+  overflow-x: auto;
+  padding-bottom: 5px;
+}
+.btn-filter {
+  padding: 8px 20px;
+  border-radius: 20px;
+  border: 1px solid #e2e8f0;
+  background: white;
+  cursor: pointer;
+  white-space: nowrap;
+  font-weight: 500;
+  transition: 0.2s;
+}
+.btn-filter.active {
+  background: var(--primary);
+  color: white;
+  border-color: var(--primary);
+}
+
+.status-badge {
+  padding: 5px 12px;
+  border-radius: 50px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+.cell-label {
+  display: none;
+}
+
+/* ========================================================
+   10. INTERNSHIP HUB COMPONENT
+   ======================================================== */
+.hub-container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 2rem 1rem;
+  font-family: "Inter", sans-serif;
+  background: var(--bg-light);
+  min-height: 100vh;
+}
+
+.hub-header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  background: var(--white);
+  padding: 1.5rem 2rem;
+  border-radius: 20px;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+  margin-bottom: 2rem;
+  gap: 1.5rem;
+}
+
+.hub-title {
+  margin: 0;
+  color: var(--dark);
+  font-size: 1.75rem;
+  font-weight: 800;
+}
+
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.header-info {
+  grid-column: 2;
+  text-align: center;
+}
+
+.hub-subtitle {
+  justify-content: center;
+}
+
+.header-status {
+  grid-row: 2;
+  grid-column: 1 / -1;
+  justify-self: center;
+  margin-top: 15px;
+}
+
+.hub-title {
+  font-size: clamp(1.5rem, 5vw, 2.2rem);
+  font-weight: 800;
+  color: #1e293b;
+  margin: 0;
+  letter-spacing: -1px;
+}
+.hub-subtitle {
+  color: #64748b;
+  font-size: 0.95rem;
+  margin-top: 0.6rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.hub-subtitle i {
+  color: var(--primary);
+}
+
+.hub-grid {
+  display: grid;
+  grid-template-columns: 380px 1fr;
+  gap: 2rem;
+  align-items: start;
+}
+.entry-card {
+  background: white;
+  border-radius: 24px;
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05);
+  border: 1px solid #e2e8f0;
+  overflow: hidden;
+  position: sticky;
+  top: 2rem;
+}
+.card-accent {
+  height: 8px;
+  background: #10b981;
+}
+.card-content {
+  padding: 2rem;
+  margin: 2rem;
+}
+.card-title {
+  font-weight: 800;
+  color: #065f46;
+  margin-bottom: 0.5rem;
+}
+.card-desc {
+  font-size: 0.85rem;
+  color: #64748b;
+  margin-bottom: 1.5rem;
+  line-height: 1.5;
+}
+
+.hub-form .form-group {
+  margin-bottom: 1.5rem;
+}
+.hub-form label {
+  display: block;
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: #94a3b8;
+  margin-bottom: 0.6rem;
+}
+.input-wrapper.readonly {
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 14px;
+  padding: 0.8rem 1rem;
+  display: flex;
+  align-items: center;
+  color: #475569;
+}
+.input-wrapper input {
+  border: none;
+  background: transparent;
+  width: 100%;
+  margin-left: 10px;
+  font-weight: 600;
+  outline: none;
+}
+.hub-form textarea {
+  width: 100%;
+  border: 1px solid #e2e8f0;
+  background: #f8fafc;
+  border-radius: 14px;
+  padding: 1rem;
+  font-size: 0.95rem;
+  transition: all 0.2s;
+}
+.hub-form textarea:focus {
+  background: white;
+  border-color: #10b981;
+  box-shadow: 0 0 0 4px rgba(16, 185, 129, 0.1);
+  outline: none;
+}
+
+.location-verification {
+  background: #f0f9ff;
+  border: 2px dashed #bae6fd;
+  border-radius: 18px;
+  padding: 1.5rem;
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+.btn-verify {
+  background: #0f172a;
+  color: white;
+  border: none;
+  padding: 0.75rem 1.25rem;
+  border-radius: 12px;
+  font-weight: 600;
+  width: 100%;
+  transition: transform 0.2s;
+  cursor: pointer;
+}
+.btn-verify:active {
+  transform: scale(0.98);
+}
+.loc-status {
+  font-size: 0.8rem;
+  margin-top: 10px;
+  font-weight: 600;
+  display: block;
+}
+
+.btn-submit {
+  background: #10b981;
+  color: white;
+  border: none;
+  padding: 1.1rem;
+  border-radius: 16px;
+  width: 100%;
+  font-weight: 800;
+  font-size: 1rem;
+  box-shadow: 0 10px 15px -3px rgba(16, 185, 129, 0.3);
+  transition: all 0.3s;
+  cursor: pointer;
+}
+.btn-submit:hover:not(:disabled) {
+  background: #059669;
+  transform: translateY(-2px);
+}
+.btn-submit:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+.stats-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+.stat-box {
+  background: white;
+  padding: 1.8rem;
+  border-radius: 24px;
+  border: 1px solid #e2e8f0;
+  text-align: center;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.02);
+}
+.stat-value {
+  font-size: 2.5rem;
+  font-weight: 900;
+  line-height: 1;
+  margin: 10px 0;
+}
+.stat-value.purple {
+  color: #6366f1;
+}
+.stat-value.orange {
+  color: #f59e0b;
+}
+
+.history-card {
+  background: white;
+  padding: 2rem;
+  border-radius: 24px;
+  border: 1px solid #e2e8f0;
+  overflow-x: auto;
+}
+.history-title {
+  font-weight: 800;
+  color: #1e293b;
+  margin-bottom: 1.5rem;
+  font-size: 1.2rem;
+}
+
+.hub-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0 12px;
+  min-width: 600px;
+}
+.hub-table th {
+  font-size: 0.75rem;
+  color: #94a3b8;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  padding: 0 1rem;
+  text-align: left;
+}
+.hub-table tbody tr {
+  transition: transform 0.2s;
+}
+.hub-table tbody tr:hover {
+  transform: scale(1.01);
+}
+.hub-table td {
+  background: #f8fafc;
+  padding: 1.2rem 1rem;
+  border: none;
+}
+.hub-table td:first-child {
+  border-radius: 16px 0 0 16px;
+  font-weight: 700;
+}
+.hub-table td:last-child {
+  border-radius: 0 16px 16px 0;
+  text-align: right;
+}
+
+.tag-success {
+  background: #dcfce7;
+  color: #15803d;
+  padding: 0.4rem 0.8rem;
+  border-radius: 8px;
+  font-size: 0.75rem;
+  font-weight: 700;
+}
+.pulse-dot {
+  width: 8px;
+  height: 8px;
+  background: white;
+  border-radius: 50%;
+  margin-right: 10px;
+  animation: hub-pulse 2s infinite;
+}
+
+@keyframes hub-pulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.7);
+  }
+  70% {
+    box-shadow: 0 0 0 10px rgba(255, 255, 255, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(255, 255, 255, 0);
+  }
+}
+
+/* ========================================================
+   11. МОДАЛ, ПРОГРЕС И ОСТАНАТО (ENHANCED TABLE RESPONSIVENESS)
+   ======================================================== */
+#settingsModal {
+  backdrop-filter: blur(5px);
+  transition: all 0.3s ease;
+}
+#settingsModal > div {
+  border: none;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+}
+
+.progress-container {
+  width: 100%;
+  background: #e2e8f0;
+  height: 8px;
+  border-radius: 4px;
+  margin-bottom: 4px;
+  overflow: hidden;
+}
+.progress-fill {
+  background: linear-gradient(90deg, #6366f1, #a855f7);
+  height: 100%;
+  border-radius: 4px;
+  transition: width 0.5s ease-out;
+}
+
+.btn-verify-sm {
+  padding: 6px 14px;
+  font-size: 0.85rem;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  color: #1e293b;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.btn-verify-sm:hover {
+  background: #6366f1;
+  color: white;
+  border-color: #6366f1;
+}
+
+/* --- THE FIX FOR LAPTOP TABLE VIEW ON MOBILE --- */
+.table-responsive {
+  width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch; /* Smooth swiping on iOS */
+  border-radius: 12px;
+  margin-bottom: 1rem;
+  box-shadow: inset -10px 0 10px -10px rgba(0, 0, 0, 0.1); /* Subtle indicator to scroll */
+}
+.table-responsive table {
+  width: 100%;
+  min-width: 900px; /* Forces the table to stay desktop-sized */
+  border-collapse: separate;
+  border-spacing: 0 12px;
+}
+.table-responsive th,
+.table-responsive td {
+  white-space: nowrap; /* Prevents text and buttons from squishing into multiple lines */
+}
+.table-responsive::-webkit-scrollbar {
+  height: 8px;
+}
+.table-responsive::-webkit-scrollbar-track {
+  background: #f1f5f9;
+  border-radius: 10px;
+}
+.table-responsive::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 10px;
+}
+
+.pac-container {
+  border-radius: 10px;
+  border: none;
+  box-shadow:
+    0 4px 6px -1px rgba(0, 0, 0, 0.1),
+    0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  margin-top: 5px;
+  font-family: inherit;
+}
+.pac-item {
+  padding: 8px 12px;
+  cursor: pointer;
+}
+.pac-item:hover {
+  background-color: #f8fafc;
+}
+
+/* ========================================================
+   12. ИЗВЕСТУВАЊА (NOTIFICATIONS)
+   ======================================================== */
+.notif-badge {
+  position: absolute;
+  top: -5px;
+  right: -8px;
+  background: #ef4444;
+  color: white;
+  font-size: 0.7rem;
+  padding: 2px 6px;
+  border-radius: 50%;
+  font-weight: bold;
+  border: 2px solid white;
+  animation: pulse 2s infinite;
+}
+.notif-menu {
+  display: none;
+  position: absolute;
+  top: 40px;
+  right: 0;
+  width: 300px;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+  z-index: 1000;
+  border: 1px solid #e2e8f0;
+  overflow: hidden;
+}
+.notif-menu.show {
+  display: block;
+}
+.notif-header {
+  padding: 12px 15px;
+  font-weight: bold;
+  background: #f8fafc;
+  border-bottom: 1px solid #e2e8f0;
+  color: #1e293b;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.notif-item {
+  display: flex;
+  gap: 12px;
+  padding: 12px 15px;
+  text-decoration: none;
+  color: #334155;
+  border-bottom: 1px solid #f1f5f9;
+  transition: background 0.2s;
+}
+.notif-item:hover {
+  background: #f1f5f9;
+}
+.notif-item.unread {
+  background: #eff6ff;
+}
+.notif-icon {
+  color: #6366f1;
+  font-size: 1.1rem;
+  margin-top: 2px;
+}
+.notif-content p {
+  margin: 0;
+  font-size: 0.85rem;
+  line-height: 1.4;
+}
+.notif-time {
+  font-size: 0.75rem;
+  color: #94a3b8;
+}
+.notif-footer {
+  display: block;
+  text-align: center;
+  padding: 10px;
+  font-size: 0.85rem;
+  color: #6366f1;
+  font-weight: 600;
+  text-decoration: none;
+  background: #f8fafc;
+}
+.notif-empty,
+.empty-state {
+  padding: 40px 20px;
+  text-align: center;
+  color: #94a3b8;
+  font-size: 0.9rem;
+}
+
+.notif-container {
+  max-width: 800px;
+  margin: 50px auto;
+  padding: 20px;
+}
+.notif-card {
+  background: white;
+  border-radius: 15px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  padding: 30px;
+  border: 1px solid #eee;
+}
+.notif-text {
+  color: #333;
+  font-size: 1.1rem;
+  font-weight: 500;
+  margin: 0;
+}
+.notif-date {
+  color: #888;
+  font-size: 0.85rem;
+  display: block;
+  margin-top: 5px;
+}
+.btn-view {
+  background: #007bff;
+  color: white;
+  text-decoration: none;
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+.badge-count {
+  background: #e7f1ff;
+  color: #007bff;
+  padding: 5px 15px;
+  border-radius: 20px;
+  font-weight: bold;
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+/* ========================================================
+   13. ГЛАВНА РЕСПОНЗИВНОСТ (MEDIA QUERIES ЗА СИТЕ УРЕДИ)
+   ======================================================== */
+
+/* --- Екрани под 1024px (Таблети во Landscape / Помали лаптопи) --- */
+@media (max-width: 1024px) {
+  .hub-grid {
+    grid-template-columns: 1fr;
+  }
+  .entry-card {
+    position: static;
+    margin-bottom: 2rem;
+  }
+  .features-grid {
+    gap: 1.5rem;
+  }
+}
+
+/* --- Екрани под 768px (Таблети во Portrait / Големи телефони) --- */
+@media (max-width: 768px) {
+  .hub-table {
+    min-width: 100%;
+  }
+
+  /* Navbar */
+  .navbar {
+    padding: 0.5rem 1rem;
+    position: relative;
+  }
+  .navbar .container {
+    flex-wrap: wrap;
+    align-items: center;
+  }
+  .logo {
+    font-size: 1.25rem;
+  }
+  .nav-actions {
+    margin-left: auto;
+    gap: 12px;
+    order: 2;
+  }
+  .nav-actions .btn {
+    padding: 0.4rem 1rem;
+    font-size: 0.9rem;
+    width: auto;
+    margin-top: 0;
+  }
+  .nav-links {
+    order: 3;
+    width: 100%;
+    margin-left: 0;
+    margin-top: 0.5rem;
+    padding-top: 0.5rem;
+    border-top: 1px solid #e2e8f0;
+    display: flex;
+    justify-content: center;
+    gap: 1.5rem;
+  }
+
+  /* Auth / Login Forms */
+  .auth-card {
+    padding: 2rem;
+    margin: 1.5rem auto;
+    width: 90%;
+  }
+
+  /* Note: Removed the aggressive table collapsing logic here 
+     so that the tables maintain their laptop layout and scroll horizontally! */
+
+  .cell-label {
+    display: inline-block;
+    font-weight: 600;
+    color: var(--secondary);
+    font-size: 0.85rem;
+    text-align: left;
+    margin-right: 15px;
+  }
+  .action-cell {
+    margin-top: 10px;
+    padding-top: 15px;
+    border-top: 1px solid #edf2f7;
+    justify-content: center;
+  }
+
+  /* =========================================
+   INTERNSHIP HUB: STRICT MOBILE OPTIMIZATION
+   ========================================= */
+
+  /* 1. Kill the Overflow completely */
+  .hub-container {
+    padding: 1rem 0.5rem !important;
+    width: 100%;
+    max-width: 100vw;
+    box-sizing: border-box;
+    overflow-x: hidden; /* This acts as a hard wall to prevent horizontal scroll */
+  }
+
+  /* 2. Fix the Header and force text wrapping */
+  .hub-header {
+    padding: 1.2rem 1rem !important;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  .hub-subtitle {
+    flex-wrap: wrap; /* Prevents long school/company names from breaking the screen width */
+    line-height: 1.5;
+  }
+
+  .header-status {
+    width: 100%;
+    margin-top: 0;
+  }
+
+  .status-badge {
+    justify-content: center;
+    width: 100%;
+  }
+
+  /* 3. Stacking the Grid */
+  .hub-grid {
+    display: flex !important;
+    flex-direction: column;
+    gap: 1.5rem;
+    width: 100%;
+  }
+
+  .hub-sidebar {
+    width: 100%;
+    order: 1;
+    box-sizing: border-box;
+  }
+  .hub-main {
+    width: 100%;
+    order: 2;
+    box-sizing: border-box;
+  }
+
+  /* 4. Shrink the Form Card Elements */
+  .entry-card {
+    border-radius: 16px !important;
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  .card-content {
+    padding: 1rem !important; /* Tighter padding inside the form */
+    margin: 0 !important;
+  }
+
+  .hub-form textarea {
+    padding: 0.8rem !important; /* Shrinks the massive text area */
+    font-size: 16px !important; /* 16px strictly prevents iOS auto-zoom */
+  }
+
+  .btn-submit {
+    padding: 0.9rem !important; /* Shrinks the giant button */
+    font-size: 0.95rem !important;
+  }
+
+  /* 5. Shrink the Stats */
+  .stats-row {
+    display: grid !important;
+    grid-template-columns: 1fr !important;
+    gap: 0.8rem;
+    width: 100%;
+  }
+
+  .stat-box {
+    padding: 1rem !important;
+  }
+
+  .stat-value {
+    font-size: 1.8rem !important; /* Shrinks the massive numbers */
+  }
+
+  /* 6. Alert Ping */
+  .alert-ping {
+    flex-direction: column !important;
+    text-align: center;
+    gap: 10px !important;
+    padding: 1rem !important;
+  }
+
+  .alert-ping .ping-icon {
+    margin: 0 auto;
+  }
+
+  /* 7. History Card constraints */
+  .history-card {
+    padding: 1rem 0.5rem !important; /* Tighter edges so the table fits better */
+    border-radius: 16px !important;
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  .history-card .table-responsive {
+    width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    border-radius: 8px;
+  }
+
+  .history-card .hub-table {
+    min-width: 450px; /* Forces a controlled horizontal scroll */
+  }
+}
+
+/* --- Екрани под 576px (Стандардни мобилни телефони) --- */
+@media (max-width: 576px) {
+  html,
+  body {
+    overflow-x: hidden;
+    max-width: 100%;
+  }
+
+  .alert-ping {
+    flex-direction: column;
+    text-align: center;
+    padding: 1rem !important;
+  }
+  .alert-ping > div:last-child {
+    width: 100%;
+  }
+  .ping-icon {
+    margin: 0 auto;
+  }
+
+  .hub-form textarea,
+  .input-wrapper input {
+    font-size: 16px;
+  }
+
+  /* Main Container */
+  main {
+    align-items: flex-start;
+    padding-top: 2rem;
+  }
+
+  /* Hero Section */
+  .hero {
+    padding: 4rem 1rem;
+  }
+  .hero-title {
+    font-size: 2.2rem;
+  }
+  .hero-actions {
+    flex-direction: column;
+    width: 100%;
+  }
+  .btn-primary-lg,
+  .btn-outline {
+    width: 100%;
+    text-align: center;
+  }
+
+  /* Dashboard & Cards */
+  .dashboard-wrapper {
+    margin-top: 1rem;
+  }
+  .stat-card {
+    padding: 1.5rem;
+    margin: 0 0 1rem 0;
+  }
+  .stats-row {
+    grid-template-columns: 1fr;
+  }
+
+  /* Hub */
+  .hub-header {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+    margin-bottom: 2.5rem;
+    gap: 1rem;
+  }
+  .hub-title {
+    font-size: 1.8rem;
+  }
+
+  /* Forms */
+  .auth-card {
+    padding: 1.5rem;
+    margin: 1rem auto;
+    width: calc(100% - 2rem);
+    border-radius: 12px;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  }
+  .auth-card h2 {
+    font-size: 1.5rem;
+    margin-bottom: 1.5rem;
+  }
+  .form-control {
+    padding: 0.8rem;
+    font-size: 16px;
+  }
+  .toggle-password {
+    top: 40px;
+  }
+  .btn {
+    padding: 0.9rem;
+  }
+
+  /* Notifications Card */
+  .notif-card {
+    padding: 15px;
+  }
+  .notif-item {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+  .btn-view {
+    width: 100%;
+    text-align: center;
+  }
+}
+
+/* --- Екрани под 400px (Многу мали телефони) --- */
+@media (max-width: 400px) {
+  .nav-links {
+    flex-direction: column;
+    gap: 0.8rem;
+    align-items: center;
+  }
+  .nav-links a {
+    display: block;
+    width: 100%;
+    text-align: center;
+    padding: 0.5rem 0;
+  }
+  .nav-actions {
+    width: 100%;
+    justify-content: center;
+    margin-top: 0.5rem;
+  }
+}

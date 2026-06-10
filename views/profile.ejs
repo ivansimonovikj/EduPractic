@@ -1,0 +1,111 @@
+<div class="dashboard-wrapper" style="margin-top: 2rem; margin-bottom: 4rem;">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-md-8 col-lg-7">
+        
+        <% if(success_msg != '') { %>
+          <div class="alert alert-success alert-dismissible fade show mb-4" role="alert" style="border-radius: 12px;">
+            <%= success_msg %>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+          </div>
+        <% } %>
+        
+        <% if(error_msg != '') { %>
+          <div class="alert alert-danger alert-dismissible fade show mb-4" role="alert" style="border-radius: 12px;">
+            <%= error_msg %>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+          </div>
+        <% } %>
+
+        <div class="stat-card" style="padding: 2.5rem; background: #fff; border-radius: 20px; box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1);">
+          <header class="mb-4 text-center">
+            <h2 class="fw-bold" style="color: #1e293b;"><%= __('profile.pageTitle') %></h2>
+            <p class="text-muted"><%= __('profile.pageSubtitle') %></p>
+          </header>
+
+          <form action="/profile" method="POST">
+            
+            <div class="mb-3">
+              <label class="form-label text-secondary" style="font-weight: 500;"><%= __('profile.nameLabel') %></label>
+              <input type="text" name="name" class="form-control shadow-none" value="<%= user.name %>" required style="border-radius: 10px; padding: 12px; border: 1px solid #e2e8f0;">
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label text-secondary" style="font-weight: 500;"><%= __('profile.phoneLabel') %></label>
+              <input type="tel" name="phone" class="form-control shadow-none" value="<%= user.phone || '' %>" placeholder="07X XXX XXX" style="border-radius: 10px; padding: 12px; border: 1px solid #e2e8f0;">
+            </div>
+
+            <% if (user.role === 'student') { %>
+              <div class="mb-3">
+                <label class="form-label text-secondary" style="font-weight: 500;"><%= __('profile.linkedinLabel') %></label>
+                <input type="url" name="linkedin" class="form-control shadow-none" value="<%= user.linkedin || '' %>" placeholder="<%= __('profile.linkedinPlaceholder') %>" style="border-radius: 10px; padding: 12px; border: 1px solid #e2e8f0;">
+              </div>
+            <% } %>
+
+            <% if (user.role === 'company') { %>
+              <div class="mb-3">
+                <label class="form-label text-secondary" style="font-weight: 500;"><%= __('profile.websiteLabel') %></label>
+                <input type="url" name="website" class="form-control shadow-none" value="<%= user.website || '' %>" placeholder="<%= __('profile.websitePlaceholder') %>" style="border-radius: 10px; padding: 12px; border: 1px solid #e2e8f0;">
+              </div>
+
+              <div class="mb-3">
+                <label class="form-label text-secondary" style="font-weight: 500;"><%= __('profile.descriptionLabel') %></label>
+                <textarea name="description" class="form-control shadow-none" rows="3" style="border-radius: 10px; padding: 12px; border: 1px solid #e2e8f0;"><%= user.description || '' %></textarea>
+              </div>
+
+              <div class="mb-4 mt-4 p-3" style="background: #f8fafc; border-radius: 15px; border: 1px dashed #cbd5e1;">
+                <label class="form-label fw-bold" style="color: #475569;">📍 <%= __('profile.locationLabel') %></label>
+                
+                <div class="mb-2">
+                  <input id="pac-input" class="form-control shadow-none" type="text" placeholder="<%= __('profile.locationSearchPlaceholder') %>" style="border-radius: 8px; border: 1px solid #cbd5e1; padding: 12px; font-size: 0.9rem;">
+                </div>
+                
+                <div id="map" style="height: 300px; width: 100%; border-radius: 12px; border: 1px solid #e2e8f0; margin-bottom: 15px;"></div>
+                
+                <div class="row g-2">
+                  <div class="col-6">
+                    <label class="small text-muted"><%= __('profile.latitudeLabel') %></label>
+                    <input type="text" id="compLat" name="lat" class="form-control bg-light" value="<%= user.location?.lat || 41.9981 %>" readonly style="font-size: 0.8rem; border: none; padding: 10px;">
+                  </div>
+                  <div class="col-6">
+                    <label class="small text-muted"><%= __('profile.longitudeLabel') %></label>
+                    <input type="text" id="compLng" name="lng" class="form-control bg-light" value="<%= user.location?.lng || 21.4254 %>" readonly style="font-size: 0.8rem; border: none; padding: 10px;">
+                  </div>
+                </div>
+              </div>
+            <% } %>
+
+            <hr class="my-4" style="opacity: 0.1;">
+
+            <div class="row mb-4 align-items-center">
+                <div class="col-6">
+                    <label class="small text-secondary d-block"><%= __('profile.emailLabel') %></label>
+                    <span class="fw-medium" style="color: #1e293b;"><%= user.email %></span>
+                </div>
+                <div class="col-6 text-end">
+                    <label class="small text-secondary d-block text-end"><%= __('profile.roleLabel') %></label>
+                    <span class="badge bg-dark px-3 py-2" style="border-radius: 6px; font-weight: 500; letter-spacing: 0.5px;">
+                      <%= user.role === 'company' ? __('profile.roleCompany') : __('profile.roleStudent') %>
+                    </span>
+                </div>
+            </div>
+
+            <div class="d-grid gap-2">
+              <button type="submit" class="btn btn-primary" style="padding: 14px; border-radius: 12px; font-weight: 600; background: #4f46e5; border: none; transition: 0.3s;">
+                <%= __('profile.saveChangesBtn') %>
+              </button>
+              
+              <a href="/dashboard" class="text-center mt-3" style="text-decoration: none; color: #64748b; font-size: 0.95rem; font-weight: 500;">
+                <i class="bi bi-arrow-left me-1"></i> <%= __('profile.backToDashboard') %>
+              </a>
+            </div>
+
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="/js/mapPicker.js"></script>
+<script src="https://maps.googleapis.com/maps/api/js?key=<%= googleMapsApiKey %>&libraries=places&callback=initMap" async defer></script>
