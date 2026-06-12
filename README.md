@@ -33,7 +33,11 @@ Traditional internship management in the VET sector often relies on paper logboo
 
   | 📋 Reviewing Student Applications | ✍️ Posting a New Internship |
   | :---: | :---: |
-  | <img width="400" alt="companyReviewGif" src="YOUR_COMPANY_GIF_1_HERE" /> | <img width="400" alt="companyPostGif" src="YOUR_COMPANY_GIF_2_HERE" /> |
+  | <img width="400" alt="companyReviewGif" src="YOUR_COMPANY_GIF_1_HERE" /> | <img width="400" alt="companyPostGif" src="https://github.com/user-attachments/assets/b867521b-d084-4858-b4ed-665aa666da6b" /> |
+
+
+
+
 
   <br>
 
