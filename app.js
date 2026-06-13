@@ -142,4 +142,16 @@ app.post("/notifications/mark-as-read", async (req, res) => {
 });
 
 const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => console.log(`🚀 Серверот работи на порта ${PORT}`));
+mongoose
+  .connect(process.env.MONGO_URI, {
+    serverSelectionTimeoutMS: 5000, // Побрзо ќе јави грешка наместо да чека
+  })
+  .then(() => {
+    console.log("✅ Успешно поврзано со MongoDB Atlas");
+    // СТАРТУВАЈ ГО СЕРВЕРОТ ДУРИ ОТКАКО ЌЕ СЕ ПОВРЗЕ БАЗАТА
+    app.listen(PORT, () => console.log(`🚀 Серверот работи на порта ${PORT}`));
+  })
+  .catch((err) => {
+    console.error("❌ Грешка при поврзување:", err);
+    process.exit(1); // Ако нема база, апликацијата не треба ни да работи
+  });
