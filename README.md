@@ -44,7 +44,10 @@ Traditional internship management in the VET sector often relies on paper logboo
 
   | 📊 Monitoring Student Progress | 🗄️ 1-Click Bulk PDF Archiving |
   | :---: | :---: |
-  | <img width="400" alt="professorMonitorGif" src="YOUR_PROFESSOR_GIF_1_HERE" /> | <img width="400" alt="professorArchiveGif" src="YOUR_PROFESSOR_GIF_2_HERE" /> |
+  | <img width="400" alt="professorMonitorGif" src="https://github.com/user-attachments/assets/45c7bc5c-185a-42cd-b4e3-51eb23ccb1b9" /> | <img width="400" alt="professorArchiveGif" src="YOUR_PROFESSOR_GIF_2_HERE" /> |
+
+
+
 
 - **Responsive Hub Design:** Mobile-first, flex-grid layouts ensuring complex data tables and interactive dashboards scale perfectly on all devices.
 - **Smart Notifications:** Real-time alert ping system for application status updates and urgent mentor feedback.
