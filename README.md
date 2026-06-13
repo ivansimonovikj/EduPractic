@@ -1,4 +1,9 @@
 # EduPractic 🎓💼
+<br>
+
+**🚀 [Click here to view the live platform](https://edu-practic.vercel.app/)**
+
+<br>
 
 ![Node.js](https://img.shields.io/badge/Node.js-43853D?style=for-the-badge&logo=node.js&logoColor=white)
 ![Express.js](https://img.shields.io/badge/Express.js-404D59?style=for-the-badge)
@@ -6,6 +11,16 @@
 ![EJS](https://img.shields.io/badge/EJS-B4CA65?style=for-the-badge&logoColor=black)
 
 **EduPractic** is a comprehensive, full-stack internship management platform designed to digitize and streamline the Vocational Education and Training (VET) sector. It bridges the gap between students, educational institutions, and companies by providing a centralized hub for applying, tracking, and evaluating practical learning experiences.
+
+## 🔑 Live Demo Credentials
+
+Recruiters and testers can explore the fully populated platform without registering by using these demo accounts:
+
+| Role | Email | Password |
+| :--- | :--- | :--- |
+| **🧑‍🎓 Student** | `student@demo.com` | `demo123` |
+| **🏢 Company** | `company@demo.com` | `demo123` |
+| **👨‍🏫 Mentor** | `mentor@demo.com` | `demo123` |
 
 ## 🎯 The Problem & Solution
 
