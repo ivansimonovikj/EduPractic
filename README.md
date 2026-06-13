@@ -12,6 +12,16 @@
 
 **EduPractic** is a comprehensive, full-stack internship management platform designed to digitize and streamline the Vocational Education and Training (VET) sector. It bridges the gap between students, educational institutions, and companies by providing a centralized hub for applying, tracking, and evaluating practical learning experiences.
 
+## 🔑 Live Demo Credentials
+
+Recruiters and testers can explore the fully populated platform without registering by using these demo accounts:
+
+| Role | Email | Password |
+| :--- | :--- | :--- |
+| **🧑‍🎓 Student** | `student@demo.com` | `demo123` |
+| **🏢 Company** | `company@demo.com` | `demo123` |
+| **👨‍🏫 Mentor** | `mentor@demo.com` | `demo123` |
+
 ## 🎯 The Problem & Solution
 
 Traditional internship management in the VET sector often relies on paper logbooks, manual attendance tracking, and disconnected communication. EduPractic solves this by offering a role-based, bilingual digital ecosystem where daily logs, location verifications, and progress archives are managed automatically.
