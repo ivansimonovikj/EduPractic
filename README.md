@@ -1,7 +1,7 @@
 # EduPractic 🎓💼
 <br>
 
-**🚀 [Click here to view the live platform](https://edu-practic.vercel.app/)**
+**🚀 [Click here to view the live platform](edupractic-production.up.railway.app)**
 
 <br>
 
