@@ -1,7 +1,7 @@
 # EduPractic 🎓💼
 <br>
 
-**🚀 [Click here to view the live platform](https://edu-practic.vercel.app/)**
+**🚀 [Click here to view the live platform](https://edupractic-production.up.railway.app)**
 
 <br>
 
@@ -20,7 +20,7 @@ Recruiters and testers can explore the fully populated platform without register
 | :--- | :--- | :--- |
 | **🧑‍🎓 Student** | `student@demo.com` | `demo123` |
 | **🏢 Company** | `company@demo.com` | `demo123` |
-| **👨‍🏫 Mentor** | `mentor@demo.com` | `demo123` |
+| **👨‍🏫 Professor** | `professor@demo.com` | `demo123` |
 
 ## 🎯 The Problem & Solution
 
