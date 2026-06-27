@@ -24,6 +24,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // --- 2. ЛОГИКА ЗА ЈАЧИНА НА ЛОЗИНКА ---
   const updateStrength = () => {
+    if (!strengthWrapper || !strengthBar || !strengthText) return;
+
     const val = passwordInput.value;
     strengthWrapper.style.display = val.length > 0 ? "block" : "none";
 
